@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const datesRoutes = require("./src/dates/routes");
+// const datesRoutes = require("./src/dates/routes");
 const symptomsRoutes = require("./src/symptoms/routes");
 const triggersRoutes = require("./src/triggers/routes");
 const symptomEntryRoutes = require("./src/symptom_entries/routes");
@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 // ROUTES
-app.use("/dates", datesRoutes);
+// app.use("/dates", datesRoutes);
 app.use("/symptoms", symptomsRoutes);
 app.use("/triggers", triggersRoutes);
 app.use("/symptom-entries", symptomEntryRoutes);

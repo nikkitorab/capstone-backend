@@ -32,11 +32,15 @@ const addSymptomEntry = (request, response) => {
   //make helper function to get current date/time and then find id of date record within 18 hours of current
   //get symptom_id based on the symptom they clicked on
   //for now just manually enter date_id and symptom_id into postman:
-  const { rating, date_id, symptom_id } = request.body;
+  // const { rating, date_id, symptom_id } = request.body;
+  const rating = request.body.rating;
+  const symptom_id = request.body.symptom_id;
+  // const entry_time = Date.now();
+  const entry_time = new Date(Date.now()).toISOString();
   //add symptom to db
   pool.query(
     queries.addSymptomEntry,
-    [rating, date_id, symptom_id],
+    [rating, entry_time, symptom_id],
     (error, results) => {
       if (error) {
         throw error;

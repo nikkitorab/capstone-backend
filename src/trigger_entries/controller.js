@@ -32,11 +32,15 @@ const addTriggerEntry = (request, response) => {
   //make helper function to get current date/time and then find id of date record within 18 hours of current
   //get trigger_id based on the trigger they clicked on
   //for now just manually enter date_id and trigger_id into postman:
-  const { occurred, date_id, trigger_id } = request.body;
+  const occurred = request.body.occurred;
+  //change trigger_id so it gets value from button click, not request body
+  const trigger_id = request.body.trigger_id;
+  const entry_time = new Date(Date.now()).toISOString();
+
   //add trigger entry to db
   pool.query(
     queries.addTriggerEntry,
-    [occurred, date_id, trigger_id],
+    [occurred, entry_time, trigger_id],
     (error, results) => {
       if (error) {
         throw error;
