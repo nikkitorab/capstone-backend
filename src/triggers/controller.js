@@ -13,26 +13,35 @@ const getTriggers = (request, response) => {
   });
 };
 
+// GET ONE trigger by id:
+const getTriggerById = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const id = parseInt(request.params.id);
+  pool.query(queries.getTriggerById, [id], (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptom_entries table
+    response.status(200).json(results.rows);
+  });
+};
+
 //POST
 
 //POST: add symptom
 const addTrigger = (request, response) => {
   //get request body by destructuring request object body
-  // const { name } = request.body.name;
-  // const { rating_type } = request.body.rating_type;
   const { name, rating_type } = request.body;
-  // in request body: date = "2001-02-16";
-  //add date to db
+  //add trigger to db
   pool.query(queries.addTrigger, [name, rating_type], (error, results) => {
     if (error) {
       throw error;
     }
-    //if response status is OK, date has been created successfully:
+    //if response status is OK, trigger has been created successfully:
     response.status(201).send("trigger created successfully!");
   });
 };
 
 module.exports = {
   getTriggers,
+  getTriggerById,
   addTrigger,
 };

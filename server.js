@@ -11,25 +11,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
+// ROUTES
+app.use("/dates", datesRoutes);
+app.use("/symptoms", symptomsRoutes);
+app.use("/triggers", triggersRoutes);
+app.use("/symptom-entries", symptomEntryRoutes);
+app.use("/trigger-entries", triggerEntryRoutes);
+
 const port = 3000;
-
-app.get("/", (request, response) => {
-  response.send("Hello world");
-});
-
-//route that leads to dates routes
-app.use("/api/v1/dates", datesRoutes);
-
-//route that leads to symptoms routes
-app.use("/api/v1/symptoms", symptomsRoutes);
-
-//route that leads to triggers routes
-app.use("/api/v1/triggers", triggersRoutes);
-
-//route that leads to symptom_entries routes
-app.use("/api/v1/symptom-entries", symptomEntryRoutes);
-
-//route that leads to trigger_entries routes
-app.use("/api/v1/trigger-entries", triggerEntryRoutes);
-
 app.listen(port, () => console.log(`app listening on port ${port}`));

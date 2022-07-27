@@ -1,5 +1,6 @@
 //GET
 const getTriggerEntries = "SELECT * FROM trigger_entries";
+const getTriggerEntryById = "SELECT * FROM trigger_entries WHERE id = $1";
 
 //post
 const addTriggerEntry =
@@ -7,5 +8,6 @@ const addTriggerEntry =
 
 module.exports = {
   getTriggerEntries,
+  getTriggerEntryById,
   addTriggerEntry,
 };

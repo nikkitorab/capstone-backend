@@ -3,10 +3,21 @@ const queries = require("./queries");
 
 //GET
 
-//query database, get json response from symptom_entries, send it back
+// GET ALL symptom_entries: query database, get json response from symptom_entries, send it back
 const getSymptomEntries = (request, response) => {
   //sql query:
   pool.query(queries.getSymptomEntries, (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptom_entries table
+    response.status(200).json(results.rows);
+  });
+};
+
+// GET ONE symptom_entry by id:
+const getSymptomEntryById = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const id = parseInt(request.params.id);
+  pool.query(queries.getSymptomEntryById, [id], (error, results) => {
     if (error) throw error;
     //if response status is OK, return all rows in symptom_entries table
     response.status(200).json(results.rows);
@@ -38,5 +49,6 @@ const addSymptomEntry = (request, response) => {
 
 module.exports = {
   getSymptomEntries,
+  getSymptomEntryById,
   addSymptomEntry,
 };

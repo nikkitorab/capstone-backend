@@ -6,10 +6,9 @@ const controller = require("./controller");
 const router = Router();
 
 router.get("/", controller.getTriggerEntries);
-//query database, get json response from dates, send it back
 
-//get date by id
-// router.get("/:id", controller.getSymptomById);
+//get trigger_entry by id
+router.get("/:id", controller.getTriggerEntryById);
 
 //post request (use for when they START a daily entry, like pressing start button send s request)
 router.post("/", controller.addTriggerEntry);
