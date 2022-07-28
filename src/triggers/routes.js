@@ -6,7 +6,9 @@ router.get("/", controller.getTriggers);
 
 router.get("/:id", controller.getTriggerById);
 
-//post request (use for when they START a daily entry, like pressing start button send s request)
+// //get all triggers by user_id
+router.get("/users/:user_id", controller.getAllTriggersForUser);
+
 router.post("/", controller.addTrigger);
 
 module.exports = router;

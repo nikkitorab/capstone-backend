@@ -26,7 +26,6 @@ const addUser = async (request, response) => {
   // generate salt for password (use await bc its an asynchronous function)
   // create hashed password + append salt (10 is default for salt)
   const hashedPassword = await bcrypt.hash(request.body.password, 10);
-  console.log("*");
 
   const email = request.body.email;
   //add user to db

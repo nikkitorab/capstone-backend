@@ -24,6 +24,17 @@ const getTriggerById = (request, response) => {
   });
 };
 
+// GET ALL triggers for USER (from user_id fk):
+const getAllTriggersForUser = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const user_id = parseInt(request.params.user_id);
+  pool.query(queries.getAllTriggersForUser, [user_id], (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptom_entries table
+    response.status(200).json(results.rows);
+  });
+};
+
 //POST
 
 //POST: add symptom
@@ -47,5 +58,6 @@ const addTrigger = (request, response) => {
 module.exports = {
   getTriggers,
   getTriggerById,
+  getAllTriggersForUser,
   addTrigger,
 };
