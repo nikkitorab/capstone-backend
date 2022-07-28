@@ -29,15 +29,19 @@ const getTriggerById = (request, response) => {
 //POST: add symptom
 const addTrigger = (request, response) => {
   //get request body by destructuring request object body
-  const { name, rating_type } = request.body;
+  const { name, rating_type, user_id } = request.body;
   //add trigger to db
-  pool.query(queries.addTrigger, [name, rating_type], (error, results) => {
-    if (error) {
-      throw error;
+  pool.query(
+    queries.addTrigger,
+    [name, rating_type, user_id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      //if response status is OK, trigger has been created successfully:
+      response.status(201).send("trigger created successfully!");
     }
-    //if response status is OK, trigger has been created successfully:
-    response.status(201).send("trigger created successfully!");
-  });
+  );
 };
 
 module.exports = {

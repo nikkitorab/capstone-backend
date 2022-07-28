@@ -7,6 +7,8 @@ const triggersRoutes = require("./src/triggers/routes");
 const symptomEntryRoutes = require("./src/symptom_entries/routes");
 const triggerEntryRoutes = require("./src/trigger_entries/routes");
 
+const usersRoutes = require("./src/users/routes");
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -17,6 +19,8 @@ app.use("/symptoms", symptomsRoutes);
 app.use("/triggers", triggersRoutes);
 app.use("/symptom-entries", symptomEntryRoutes);
 app.use("/trigger-entries", triggerEntryRoutes);
+
+app.use("/users", usersRoutes);
 
 const port = 3000;
 app.listen(port, () => console.log(`app listening on port ${port}`));

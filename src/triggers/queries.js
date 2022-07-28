@@ -3,7 +3,8 @@ const getTriggers = "SELECT * FROM triggers";
 const getTriggerById = "SELECT * FROM triggers WHERE id = $1";
 
 //post
-const addTrigger = "INSERT INTO triggers (name, rating_type) VALUES ($1, $2)";
+const addTrigger =
+  "INSERT INTO triggers (name, rating_type, user_id) VALUES ($1, $2, $3)";
 
 module.exports = {
   getTriggers,

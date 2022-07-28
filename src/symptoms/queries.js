@@ -3,7 +3,8 @@ const getSymptoms = "SELECT * FROM symptoms";
 const getSymptomById = "SELECT * FROM symptoms WHERE id = $1";
 
 //post
-const addSymptom = "INSERT INTO symptoms (name, rating_type) VALUES ($1, $2)";
+const addSymptom =
+  "INSERT INTO symptoms (name, rating_type, user_id) VALUES ($1, $2, $3)";
 
 module.exports = {
   getSymptoms,
