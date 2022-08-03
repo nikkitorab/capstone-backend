@@ -11,4 +11,7 @@ router.get("/users/:user_id", controller.getAllTriggersForUser);
 
 router.post("/", controller.addTrigger);
 
+// delete symptom by id
+router.delete("/:id", controller.deleteTriggerById);
+
 module.exports = router;

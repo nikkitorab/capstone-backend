@@ -5,21 +5,17 @@ const queries = require("./queries");
 
 // GET ALL symptom_entries: query database, get json response from symptom_entries, send it back
 const getSymptomEntries = (request, response) => {
-  //sql query:
   pool.query(queries.getSymptomEntries, (error, results) => {
     if (error) throw error;
-    //if response status is OK, return all rows in symptom_entries table
     response.status(200).json(results.rows);
   });
 };
 
 // GET ONE symptom_entry by id:
 const getSymptomEntryById = (request, response) => {
-  //query params are strings, so to get it as an int we need to parse:
   const id = parseInt(request.params.id);
   pool.query(queries.getSymptomEntryById, [id], (error, results) => {
     if (error) throw error;
-    //if response status is OK, return all rows in symptom_entries table
     response.status(200).json(results.rows);
   });
 };
@@ -28,16 +24,11 @@ const getSymptomEntryById = (request, response) => {
 
 //POST: add symptom
 const addSymptomEntry = (request, response) => {
-  //get request body by destructuring request object body
-  //make helper function to get current date/time and then find id of date record within 18 hours of current
-  //get symptom_id based on the symptom they clicked on
-  //for now just manually enter date_id and symptom_id into postman:
-  // const { rating, date_id, symptom_id } = request.body;
   const rating = request.body.rating;
   const symptom_id = request.body.symptom_id;
-  // const entry_time = Date.now();
   const entry_time = new Date(Date.now()).toISOString();
-  //add symptom to db
+
+  //add symptom entry to db:
   pool.query(
     queries.addSymptomEntry,
     [rating, entry_time, symptom_id],

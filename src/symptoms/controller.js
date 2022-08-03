@@ -55,9 +55,19 @@ const addSymptom = (request, response) => {
   );
 };
 
+//DELETE
+const deleteSymptomById = (request, response) => {
+  const id = parseInt(request.params.id);
+  pool.query(queries.deleteSymptom, [id], (error, results) => {
+    if (error) throw error;
+    response.status(200).send("Symptom deleted successfully!");
+  });
+};
+
 module.exports = {
   getSymptoms,
   getSymptomById,
   getAllSymptomsForUser,
   addSymptom,
+  deleteSymptomById,
 };

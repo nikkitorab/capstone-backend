@@ -15,22 +15,18 @@ const getTriggers = (request, response) => {
 
 // GET ONE trigger by id:
 const getTriggerById = (request, response) => {
-  //query params are strings, so to get it as an int we need to parse:
   const id = parseInt(request.params.id);
   pool.query(queries.getTriggerById, [id], (error, results) => {
     if (error) throw error;
-    //if response status is OK, return all rows in symptom_entries table
     response.status(200).json(results.rows);
   });
 };
 
 // GET ALL triggers for USER (from user_id fk):
 const getAllTriggersForUser = (request, response) => {
-  //query params are strings, so to get it as an int we need to parse:
   const user_id = parseInt(request.params.user_id);
   pool.query(queries.getAllTriggersForUser, [user_id], (error, results) => {
     if (error) throw error;
-    //if response status is OK, return all rows in symptom_entries table
     response.status(200).json(results.rows);
   });
 };
@@ -39,7 +35,6 @@ const getAllTriggersForUser = (request, response) => {
 
 //POST: add symptom
 const addTrigger = (request, response) => {
-  //get request body by destructuring request object body
   const { name, rating_type, user_id } = request.body;
   //add trigger to db
   pool.query(
@@ -49,10 +44,18 @@ const addTrigger = (request, response) => {
       if (error) {
         throw error;
       }
-      //if response status is OK, trigger has been created successfully:
       response.status(201).send("trigger created successfully!");
     }
   );
+};
+
+//DELETE
+const deleteTriggerById = (request, response) => {
+  const id = parseInt(request.params.id);
+  pool.query(queries.deleteTrigger, [id], (error, results) => {
+    if (error) throw error;
+    response.status(200).send("Trigger deleted successfully!");
+  });
 };
 
 module.exports = {
@@ -60,4 +63,5 @@ module.exports = {
   getTriggerById,
   getAllTriggersForUser,
   addTrigger,
+  deleteTriggerById,
 };
