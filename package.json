@@ -2,7 +2,7 @@
   "name": "capstone-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +30,6 @@
     "nodemon": "^2.0.19"
   },
   "script": {
-    "start": "node index.js"
+    "start": "node server.js"
   }
 }

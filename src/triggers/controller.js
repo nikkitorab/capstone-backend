@@ -1,5 +1,5 @@
 const pool = require("../../db");
-const queries = require("./queries");
+const queries = require("./queries").default;
 
 //GET
 
