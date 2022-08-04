@@ -1,13 +1,6 @@
 const pool = require("../../db");
 const queries = require("./queries");
 
-// const getSymptomEntriesQuery = "SELECT * FROM symptom_entries";
-
-// const getSymptomEntryByIdQuery = "SELECT * FROM symptom_entries WHERE id = $1";
-
-// const addSymptomEntryQuery =
-//   "INSERT INTO symptom_entries (rating, entry_time, symptom_id) VALUES ($1, $2, $3)";
-
 //GET
 
 // GET ALL symptom_entries: query database, get json response from symptom_entries, send it back
@@ -32,11 +25,10 @@ const getSymptomEntryById = (request, response) => {
 //POST: add symptom
 const addSymptomEntry = (request, response) => {
   const rating = request.body.rating;
-  // const symptom_id = request.body.symptom_id;
-  //GET SYMPTOM ID FROM SYMPTOM NAME
+  const symptom_id = request.body.symptom_id;
   const entry_time = new Date(Date.now()).toISOString();
 
-  //add symptom entry to db:i
+  //add symptom entry to db:
   pool.query(
     queries.addSymptomEntry,
     [rating, entry_time, symptom_id],
