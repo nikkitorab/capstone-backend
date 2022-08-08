@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // const datesRoutes = require("./src/dates/routes");
 const symptomsRoutes = require("./src/symptoms/routes");
@@ -10,6 +11,7 @@ const triggerEntryRoutes = require("./src/trigger_entries/routes");
 const usersRoutes = require("./src/users/routes");
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
