@@ -36,11 +36,28 @@ CREATE TABLE trigger_entries (
 
 
 
-CREATE TABLE users (
+CREATE TABLE related_entries (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     email VARCHAR(320),
     password VARCHAR(36) 
 );
+
+
+-- *************** DB JOINS: ***************
+AUTHORS = USERS
+BOOKS = SYMPTOMS/TRIGGERS
+
+SELECT symptoms.title, authors.first_name, authors.last_name
+FROM books
+INNER JOIN authors
+    ON books.author_id = authors.id;
+
+AUTHORS = symptoms/triggers
+BOOKS = symptom_entries/trigger_entries
+
+
+
+
 
 -- *************** POPULATING THE TABLES: ***************
 

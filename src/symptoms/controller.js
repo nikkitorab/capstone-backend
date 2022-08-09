@@ -25,7 +25,54 @@ const getSymptomById = (request, response) => {
   const id = parseInt(request.params.id);
 
   // const x = [];
-  entriesController.getEntriesForSymptom(id);
+  // entriesController.getEntriesForSymptom(id);
+  // const d = await entriesController.getEntriesForSymptom().catch((err) => {
+  //   console.log(err); // handle error
+  // });
+  // console.log(d);
+  // entriesController.getEntriesForSymptom.then((data) => {
+  //   console.log(data);
+  // });
+
+  // entriesController.getEntriesForSymptom(id);
+  // entriesController.selectEntriesForSymptom(id);
+  // const first = entriesController.selectEntriesForSymptom(id);
+  // // console.log(first); // Promise { <pending> }
+
+  // const x = first.then(function (result) {
+  //   // console.log(result); // "Some User token"
+  //   return result;
+  // });
+  // console.log(x);
+  // let second = entriesController.getEntriesForSymptom(id);
+  // console.log(second); // Promise { <pending> }
+
+  // second.then(function (result) {
+  //   console.log(result); // "Some User token"
+  // });
+  // entriesController.getEntriesForSymptom(id).then((res) => console.log(res));
+  // entriesController.selectEntriesForSymptom.then(function (result) {
+  //   console.log(result); // "Some User token"
+  // });
+  let getEntriesForSymptom = entriesController.selectEntriesForSymptom(id);
+  console.log(getEntriesForSymptom); // Promise { <pending> }
+
+  getEntriesForSymptom.then(function (result) {
+    console.log(result); // "Some User token"
+  });
+
+  // selectEntriesForSymptom;
+  // console.log(x);
+
+  // entriesController.getEntriesForSymptom(id, (err, data) => {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   return data;
+  //   // console.log(data);
+  // });
+  // console.log(data);
+  // console.log(z);
   // console.log(`******************** ${x.length}`);
 
   pool.query(queries.getSymptomById, [id], (error, results) => {
