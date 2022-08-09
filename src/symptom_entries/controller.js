@@ -11,6 +11,15 @@ const getSymptomEntries = (request, response) => {
   });
 };
 
+// GET all symptom_entries for symptom_id (FK!!!):
+// const getSymptomEntryByFK = (request, response) => {
+//   const id = parseInt(request.params.id);
+//   pool.query(queries.getSymptomEntryByFK, [symptom_id], (error, results) => {
+//     if (error) throw error;
+//     response.status(200).json(results.rows);
+//   });
+// };
+
 // GET ONE symptom_entry by id:
 const getSymptomEntryById = (request, response) => {
   const id = parseInt(request.params.id);
@@ -18,6 +27,21 @@ const getSymptomEntryById = (request, response) => {
     if (error) throw error;
     response.status(200).json(results.rows);
   });
+};
+
+// GET ALL entries for SYMPTOM (from symptom_id fk):
+const getAllEntriesForSymptom = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const symptom_id = parseInt(request.params.symptom_id);
+  pool.query(
+    queries.getAllEntriesForSymptom,
+    [symptom_id],
+    (error, results) => {
+      if (error) throw error;
+      //if response status is OK, return all rows in symptom_entries table
+      response.status(200).json(results.rows);
+    }
+  );
 };
 
 //POST
@@ -42,8 +66,54 @@ const addSymptomEntry = (request, response) => {
   );
 };
 
+// DELETE ALL entries for SYMPTOM (from symptom_id fk):
+const deleteAllEntriesForSymptom = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const symptom_id = parseInt(request.params.symptom_id);
+  pool.query(
+    queries.getAllEntriesForSymptom,
+    [symptom_id],
+    (error, results) => {
+      if (error) throw error;
+      //if response status is OK, return all rows in symptom_entries table
+      response.status(200).json(results.rows);
+    }
+  );
+};
+
+// const deleteSymptomEntry = (request, response) => {
+//   const id = parseInt(request.params.id);
+//   pool.query(queries.deleteSymptomEntry, [id], (error, results) => {
+//     if (error) throw error;
+//     response.status(200).send("Symptom entry deleted successfully!");
+//   });
+// };
+
+const deleteSymptomEntry = (request, response) => {
+  const id = parseInt(request.params.id);
+  pool.query(queries.deleteSymptomEntry, [id], (error, results) => {
+    if (error) throw error;
+
+    response.status(200).send("Symptom entrydeleted successfully!");
+  });
+
+  // then delete everything with the fk
+};
+
+// const x = (id) => {
+//   const deleteSymptomEntry = (request, response) => {
+//     const id = parseInt(request.params.id);
+//     pool.query(queries.deleteSymptomEntry, [id], (error, results) => {
+//       if (error) throw error;
+//       response.status(200).send("Symptom entry deleted successfully!");
+//     });
+//   };
+// };
 module.exports = {
   getSymptomEntries,
   getSymptomEntryById,
   addSymptomEntry,
+  getAllEntriesForSymptom,
+  // deleteAllEntriesForSymptom,
+  deleteSymptomEntry,
 };

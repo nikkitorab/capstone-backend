@@ -1,5 +1,6 @@
 const pool = require("../../db");
 const queries = require("./queries");
+// const entry_controller = require("./symptom_entry/controller");
 
 //GET
 
@@ -60,8 +61,16 @@ const deleteSymptomById = (request, response) => {
   const id = parseInt(request.params.id);
   pool.query(queries.deleteSymptom, [id], (error, results) => {
     if (error) throw error;
+    //delete entries with id as fk:
+    // const entries = entry_controller.getSymptomEntryById();
+    // for(const item of entries){
+
+    // }
+
     response.status(200).send("Symptom deleted successfully!");
   });
+
+  // then delete everything with the fk
 };
 
 module.exports = {
