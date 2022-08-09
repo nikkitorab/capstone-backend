@@ -24,5 +24,5 @@ app.use("/trigger-entries", triggerEntryRoutes);
 
 app.use("/users", usersRoutes);
 
-// const port = 3000;
+const port = 3000;
 app.listen(port, () => console.log(`app listening on port ${port}`));
