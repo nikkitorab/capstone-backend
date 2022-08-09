@@ -9,6 +9,7 @@ const symptomEntryRoutes = require("./src/symptom_entries/routes");
 const triggerEntryRoutes = require("./src/trigger_entries/routes");
 
 const usersRoutes = require("./src/users/routes");
+const entryDataRoutes = require("./src/entries/routes");
 
 const app = express();
 app.use(cors());
@@ -23,6 +24,7 @@ app.use("/symptom-entries", symptomEntryRoutes);
 app.use("/trigger-entries", triggerEntryRoutes);
 
 app.use("/users", usersRoutes);
+app.use("/data", entryDataRoutes);
 
 const port = 3000;
 app.listen(port, () => console.log(`app listening on port ${port}`));

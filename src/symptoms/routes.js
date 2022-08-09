@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const controller = require("./controller");
+
 const router = Router();
 
 router.get("/", controller.getSymptoms);
@@ -16,4 +17,8 @@ router.post("/", controller.addSymptom);
 // delete symptom by id
 router.delete("/:id", controller.deleteSymptomById);
 
+// module.exports = {
+//   router,
+//   entriesController
+// }
 module.exports = router;

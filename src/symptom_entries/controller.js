@@ -5,6 +5,7 @@ const queries = require("./queries");
 
 // GET ALL symptom_entries: query database, get json response from symptom_entries, send it back
 const getSymptomEntries = (request, response) => {
+  // console.log("hello");
   pool.query(queries.getSymptomEntries, (error, results) => {
     if (error) throw error;
     response.status(200).json(results.rows);
