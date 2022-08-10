@@ -1,5 +1,6 @@
 const pool = require("../../db");
 const queries = require("./queries");
+const symptomQueries = require("../symptoms/queries");
 
 const triggerQueries = require("../triggers/queries");
 // // const symptomsQueries = require("../symptoms/queries");
@@ -29,6 +30,29 @@ let addNewSymptomToEntries = function (symptomID) {
       // const z = 0;
       pool
         .query(queries.addEntryData, [symptomID, trigger_id, 0, 0, 0, 0])
+        .then((results) => {
+          // if (error) throw error;
+          console.log(results.rows);
+          // return results.rows;
+        });
+    }
+
+    return results.rows;
+  });
+};
+
+// when a new trigger is added, this is called by triggers in the post request to add trigger to entries db
+let addNewTriggerToEntries = function (triggerID) {
+  console.log(`in the function, id is ${triggerID}`);
+  // loop trhough list of all triggers, add to to entries_data table with symptom_id that was passed in
+  return pool.query(symptomQueries.getSymptoms).then((results) => {
+    console.log(results.rows);
+
+    for (const symptom of results.rows) {
+      const symptom_id = symptom.id;
+      console.log(symptom_id);
+      pool
+        .query(queries.addEntryData, [symptom_id, triggerID, 0, 0, 0, 0])
         .then((results) => {
           // if (error) throw error;
           console.log(results.rows);
@@ -141,6 +165,7 @@ module.exports = {
   getEntriesData,
   symptomEntryAdded,
   addNewSymptomToEntries,
+  addNewTriggerToEntries,
   // selectEntriesForSymptom,
   // testing,
   // analyzeEntryData,

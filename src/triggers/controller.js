@@ -35,7 +35,7 @@ const getAllTriggersForUser = (request, response) => {
 
 //POST
 
-//POST: add symptom
+//POST: add trigger
 const addTrigger = (request, response) => {
   const { name, rating_type, user_id } = request.body;
   //add trigger to db
@@ -46,6 +46,7 @@ const addTrigger = (request, response) => {
       if (error) {
         throw error;
       }
+      entriesController.addNewTriggerToEntries(results.rows[0].id);
       response.status(201).send("trigger created successfully!");
     }
   );
@@ -54,13 +55,17 @@ const addTrigger = (request, response) => {
 //DELETE
 const deleteTriggerById = (request, response) => {
   const id = parseInt(request.params.id);
-  pool.query(queries.deleteTriggerEntriesFK, [id], (error, results) => {
+  pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
     if (error) throw error;
 
-    pool.query(queries.deleteTrigger, [id], (error, results) => {
+    pool.query(queries.deleteTriggerEntriesFK, [id], (error, results) => {
       if (error) throw error;
 
-      response.status(200).send("Trigger deleted successfully!");
+      pool.query(queries.deleteTrigger, [id], (error, results) => {
+        if (error) throw error;
+
+        response.status(200).send("Trigger deleted successfully!");
+      });
     });
   });
 };
