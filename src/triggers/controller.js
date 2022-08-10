@@ -1,5 +1,6 @@
 const pool = require("../../db");
 const queries = require("./queries");
+const entriesController = require("../entries/controller");
 
 //GET
 
@@ -16,6 +17,7 @@ const getTriggers = (request, response) => {
 // GET ONE trigger by id:
 const getTriggerById = (request, response) => {
   const id = parseInt(request.params.id);
+
   pool.query(queries.getTriggerById, [id], (error, results) => {
     if (error) throw error;
     response.status(200).json(results.rows);
@@ -52,11 +54,24 @@ const addTrigger = (request, response) => {
 //DELETE
 const deleteTriggerById = (request, response) => {
   const id = parseInt(request.params.id);
-  pool.query(queries.deleteTrigger, [id], (error, results) => {
+  pool.query(queries.deleteTriggerEntriesFK, [id], (error, results) => {
     if (error) throw error;
-    response.status(200).send("Trigger deleted successfully!");
+
+    pool.query(queries.deleteTrigger, [id], (error, results) => {
+      if (error) throw error;
+
+      response.status(200).send("Trigger deleted successfully!");
+    });
   });
 };
+
+// const deleteTriggerById = (request, response) => {
+//   const id = parseInt(request.params.id);
+//   pool.query(queries.deleteTrigger, [id], (error, results) => {
+//     if (error) throw error;
+//     response.status(200).send("Trigger deleted successfully!");
+//   });
+// };
 
 module.exports = {
   getTriggers,

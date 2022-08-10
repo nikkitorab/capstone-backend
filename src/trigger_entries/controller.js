@@ -1,5 +1,6 @@
 const pool = require("../../db");
 const queries = require("./queries");
+const entriesController = require("../entries/controller");
 
 //GET
 
@@ -36,6 +37,14 @@ const addTriggerEntry = (request, response) => {
   //change trigger_id so it gets value from button click, not request body
   const trigger_id = request.body.trigger_id;
   const entry_time = new Date(Date.now()).toISOString();
+
+  let getEntriesForTrigger =
+    entriesController.selectEntriesForTrigger(trigger_id);
+  console.log(getEntriesForTrigger); // Promise { <pending> }
+
+  getEntriesForTrigger.then(function (result) {
+    console.log(result); // "Some User token"
+  });
 
   //add trigger entry to db
   pool.query(

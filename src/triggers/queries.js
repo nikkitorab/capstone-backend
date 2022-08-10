@@ -9,6 +9,8 @@ const addTrigger =
   "INSERT INTO triggers (name, rating_type, user_id) VALUES ($1, $2, $3)";
 
 //delete
+const deleteTriggerEntriesFK =
+  "DELETE FROM trigger_entries WHERE trigger_id = $1";
 const deleteTrigger = "DELETE FROM triggers WHERE id = $1";
 
 module.exports = {
@@ -16,5 +18,6 @@ module.exports = {
   getTriggerById,
   getAllTriggersForUser,
   addTrigger,
+  deleteTriggerEntriesFK,
   deleteTrigger,
 };

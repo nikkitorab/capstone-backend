@@ -3,9 +3,6 @@ const queries = require("./queries");
 // const entry_controller = require("./symptom_entry/controller");
 // const entriesForSymptom = require("./entryController");
 const entriesController = require("../entries/controller");
-// const { getEntriesForSymptom } = require("../entries/controller");
-
-// { Router }
 
 //GET
 
@@ -24,56 +21,15 @@ const getSymptomById = (request, response) => {
   //query params are strings, so to get it as an int we need to parse:
   const id = parseInt(request.params.id);
 
-  // const x = [];
-  // entriesController.getEntriesForSymptom(id);
-  // const d = await entriesController.getEntriesForSymptom().catch((err) => {
-  //   console.log(err); // handle error
-  // });
-  // console.log(d);
-  // entriesController.getEntriesForSymptom.then((data) => {
-  //   console.log(data);
-  // });
+  //*******************************************************************************************
+  // CALLS FUNCTION IN ENTRIES: GETS ALL RELATED TRIGGER/SYMPTOM ENTRIES
+  //*******************************************************************************************
+  // let getEntriesForSymptom = entriesController.selectEntriesForSymptom(id);
+  // console.log(getEntriesForSymptom); // Promise { <pending> }
 
-  // entriesController.getEntriesForSymptom(id);
-  // entriesController.selectEntriesForSymptom(id);
-  // const first = entriesController.selectEntriesForSymptom(id);
-  // // console.log(first); // Promise { <pending> }
-
-  // const x = first.then(function (result) {
-  //   // console.log(result); // "Some User token"
-  //   return result;
-  // });
-  // console.log(x);
-  // let second = entriesController.getEntriesForSymptom(id);
-  // console.log(second); // Promise { <pending> }
-
-  // second.then(function (result) {
+  // getEntriesForSymptom.then(function (result) {
   //   console.log(result); // "Some User token"
   // });
-  // entriesController.getEntriesForSymptom(id).then((res) => console.log(res));
-  // entriesController.selectEntriesForSymptom.then(function (result) {
-  //   console.log(result); // "Some User token"
-  // });
-  let getEntriesForSymptom = entriesController.selectEntriesForSymptom(id);
-  console.log(getEntriesForSymptom); // Promise { <pending> }
-
-  getEntriesForSymptom.then(function (result) {
-    console.log(result); // "Some User token"
-  });
-
-  // selectEntriesForSymptom;
-  // console.log(x);
-
-  // entriesController.getEntriesForSymptom(id, (err, data) => {
-  //   if (err) {
-  //     return console.log(err);
-  //   }
-  //   return data;
-  //   // console.log(data);
-  // });
-  // console.log(data);
-  // console.log(z);
-  // console.log(`******************** ${x.length}`);
 
   pool.query(queries.getSymptomById, [id], (error, results) => {
     if (error) throw error;
@@ -115,17 +71,31 @@ const addSymptom = (request, response) => {
   );
 };
 
-//DELETE
+//DELETE  deleteSymptomEntriesFK
 const deleteSymptomById = (request, response) => {
   const id = parseInt(request.params.id);
-  pool.query(queries.deleteSymptom, [id], (error, results) => {
+  pool.query(queries.deleteSymptomEntriesFK, [id], (error, results) => {
     if (error) throw error;
 
-    response.status(200).send("Symptom deleted successfully!");
+    pool.query(queries.deleteSymptom, [id], (error, results) => {
+      if (error) throw error;
+
+      response.status(200).send("Symptom deleted successfully!");
+    });
   });
 
   // then delete everything with the fk
 };
+// const deleteSymptomById = (request, response) => {
+//   const id = parseInt(request.params.id);
+//   pool.query(queries.deleteSymptom, [id], (error, results) => {
+//     if (error) throw error;
+
+//     response.status(200).send("Symptom deleted successfully!");
+//   });
+
+//   // then delete everything with the fk
+// };
 
 module.exports = {
   getSymptoms,
