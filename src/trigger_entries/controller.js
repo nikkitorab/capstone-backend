@@ -38,13 +38,15 @@ const addTriggerEntry = (request, response) => {
   const trigger_id = request.body.trigger_id;
   const entry_time = new Date(Date.now()).toISOString();
 
-  let getEntriesForTrigger =
-    entriesController.selectEntriesForTrigger(trigger_id);
-  console.log(getEntriesForTrigger); // Promise { <pending> }
+  // let getEntriesForTrigger = entriesController.selectEntriesForTrigger(
+  //   trigger_id,
+  //   occurred
+  // );
+  // console.log(getEntriesForTrigger); // Promise { <pending> }
 
-  getEntriesForTrigger.then(function (result) {
-    console.log(result); // "Some User token"
-  });
+  // getEntriesForTrigger.then(function (result) {
+  //   console.log(result); // "Some User token"
+  // });
 
   //add trigger entry to db
   pool.query(

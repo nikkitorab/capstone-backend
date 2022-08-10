@@ -1,5 +1,6 @@
 const pool = require("../../db");
 const queries = require("./queries");
+const entriesController = require("../entries/controller");
 
 //GET
 
@@ -53,6 +54,7 @@ const addSymptomEntry = (request, response) => {
   const symptom_id = request.body.symptom_id;
   const entry_time = new Date(Date.now()).toISOString();
 
+  entriesController.symptomEntryAdded(symptom_id);
   //add symptom entry to db:
   pool.query(
     queries.addSymptomEntry,
