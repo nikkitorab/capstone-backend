@@ -54,7 +54,6 @@ const addSymptomEntry = (request, response) => {
   const symptom_id = request.body.symptom_id;
   const entry_time = new Date(Date.now()).toISOString();
 
-  entriesController.symptomEntryAdded(symptom_id);
   //add symptom entry to db:
   pool.query(
     queries.addSymptomEntry,
@@ -63,6 +62,8 @@ const addSymptomEntry = (request, response) => {
       if (error) {
         throw error;
       }
+      //UPDATE ENTRIES_DATA
+      entriesController.symptomEntryAdded(symptom_id, rating);
       //if response status is OK, symptom_entry has been created successfully:
       response.status(201).send("symptom entry created successfully!");
     }

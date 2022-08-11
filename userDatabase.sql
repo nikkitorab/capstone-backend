@@ -36,12 +36,22 @@ CREATE TABLE trigger_entries (
 
 
 
-CREATE TABLE related_entries (
+CREATE TABLE entries_data (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    email VARCHAR(320),
-    password VARCHAR(36) 
+    symptom_id INT,
+    trigger_id INT,
+    trigger_present FLOAT(5),
+    trigger_absent FLOAT(5),
+    -- symptom_count INT,
+    trigger_present_count INT,
+    trigger_absent_count INT,
+    FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
+    FOREIGN KEY (trigger_id) REFERENCES triggers(id)
 );
+-- trigger_present/trigger_absent are average symptom_entry ratings when that trigger is absent/present
 
+ALTER TABLE entries_data
+DROP COLUMN symptom_count;
 
 -- *************** DB JOINS: ***************
 AUTHORS = USERS
@@ -56,6 +66,14 @@ AUTHORS = symptoms/triggers
 BOOKS = symptom_entries/trigger_entries
 
 
+ALTER TABLE entries_data
+ADD symptom_count INT;
+
+ALTER TABLE entries_data
+ADD trigger_present_count INT;
+
+ALTER TABLE entries_data
+ADD trigger_absent_count INT;
 
 
 

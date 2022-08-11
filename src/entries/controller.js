@@ -3,10 +3,6 @@ const queries = require("./queries");
 const symptomQueries = require("../symptoms/queries");
 
 const triggerQueries = require("../triggers/queries");
-// // const symptomsQueries = require("../symptoms/queries");
-
-// RUN ALL OF THESE EVERY TIME NEW ENTRY IS ADDED
-// --> call from POST functions in symptom_entries & trigger_entries (main function, analyzeEntryData only)
 
 const getEntriesData = (request, response) => {
   //sql query:
@@ -59,6 +55,7 @@ let addNewTriggerToEntries = function (triggerID) {
           // return results.rows;
         });
     }
+    // console.log(`******** U: ${us}`);
 
     return results.rows;
   });
@@ -73,43 +70,54 @@ let selectEntriesForSymptom = function (symptomID) {
   return pool
     .query(queries.getRelatedEntriesSymptomID, [symptomID])
     .then((results) => {
+      console.log(`in get entries: ${results.rows}`);
+      console.log(`len: ${results.rows.length}`);
       return results.rows;
     });
 };
 //*******************************************************************************************
-// CALLS selectEntriesForSymptom: GETS ALL RELATED TRIGGER/SYMPTOM ENTRIES BY symptom_id
+// CALLED WHEN NEW SYMPTOM_ENTRY IS ADDED: UPDATES ENTRIES_DATA
 //*******************************************************************************************
-const symptomEntryAdded = (symptomID) => {
-  let getEntriesForSymptom = selectEntriesForSymptom(symptomID);
-  console.log(getEntriesForSymptom); // Promise { <pending> }
+let symptomEntryAdded = function (symptomID, rating) {
+  // loop trhough list of all triggers, add to to entries_data table with symptom_id that was passed in
+  return pool
+    .query(queries.getRelatedEntriesSymptomID, [symptomID])
+    .then((results) => {
+      console.log(results.rows);
 
-  getEntriesForSymptom.then(function (result) {
-    console.log(result); // list of objects
-    for (const i of result) {
-      if (i.occurred) {
-        // update trigger_present and trigger_present_count
-      } else {
-        //update trigger_absent and trigger_absent_count
+      for (const entry of results.rows) {
+        const triggerID = entry.trigger_id;
+        const occurred = entry.occurred;
+
+        if (occurred) {
+          pool
+            .query(queries.updateEntryDataTriggerPresent, [
+              rating,
+              symptomID,
+              triggerID,
+            ])
+            .then((updatedResults) => {
+              // if (error) throw error;
+              console.log(updatedResults.rows);
+              // return results.rows;
+            });
+        } else {
+          pool
+            .query(queries.updateEntryDataTriggerAbsent, [
+              rating,
+              symptomID,
+              triggerID,
+            ])
+            .then((updatedResults) => {
+              // if (error) throw error;
+              console.log(updatedResults.rows);
+              // return results.rows;
+            });
+        }
       }
-      /// calculate correlation and update db
 
-      console.log(`new: ${i.id}`);
-    }
-
-    // do logic in here:
-    // - loop result -->
-    // current list item: if occurred = true: update trigger_present (avg symptom rating) otherwise, update trigger_absent
-    // {
-    //   id: 79,
-    //   occurred: false,
-    //   entry_time: 2022-08-10T08:31:49.975Z,
-    //   trigger_id: 16,
-    //   rating: 1,
-    //   symptom_id: 44
-    // },
-
-    // keep track of all ids you update here, and then calculate the correlations and update the rows in the correlation table
-  });
+      return results.rows;
+    });
 };
 
 // gets all entries with trigger id with same occurred value (true/false) & the related symptoms
@@ -133,20 +141,6 @@ const triggerEntryAdded = (triggerID, occurred) => {
     // - loop result, see if entries_data has a row with current list item's trigger_id and symptom_id -->
     // if occurred === true: update trigger_present (avg symptom rating)
     // update: trigger_present (if occurred is true) or trigger_absent(if occurred is true)
-
-    //   CREATE TABLE entries_data (
-    //     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    //     symptom_id INT,
-    //     trigger_id INT,
-    //     trigger_present FLOAT(5),
-    //     trigger_absent FLOAT(5),
-    //     -- symptom_count INT,
-    //     trigger_present_count INT,
-    //     trigger_absent_count INT,
-    //     FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
-    //     FOREIGN KEY (trigger_id) REFERENCES triggers(id)
-    // );
-    // find all records in entries_data table that have trigger_id. update all of them:
   });
 };
 //*******************************************************************************************

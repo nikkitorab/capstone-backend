@@ -1,6 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+
 const cors = require("cors");
+
+// const Statistics = require("statistics");
 
 // const datesRoutes = require("./src/dates/routes");
 const symptomsRoutes = require("./src/symptoms/routes");
@@ -15,6 +18,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+// app.use(Statistics());
 
 // ROUTES
 // app.use("/dates", datesRoutes);
