@@ -56,29 +56,23 @@ const addTrigger = (request, response) => {
 const deleteTriggerById = (request, response) => {
   const id = parseInt(request.params.id);
 
-  pool.query(queries.deleteAllEntriesForTrigger, [id], (error, results) => {
-    // pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
-    if (error) throw error;
-
-    pool.query(queries.deleteTriggerEntriesFK, [id], (error, results) => {
+  pool.query(queries.deleteDataTriggerID, [id], (error, results) => {
+    pool.query(queries.deleteAllEntriesForTrigger, [id], (error, results) => {
+      // pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
       if (error) throw error;
 
-      pool.query(queries.deleteTrigger, [id], (error, results) => {
+      pool.query(queries.deleteTriggerEntriesFK, [id], (error, results) => {
         if (error) throw error;
 
-        response.status(200).send("Trigger deleted successfully!");
+        pool.query(queries.deleteTrigger, [id], (error, results) => {
+          if (error) throw error;
+
+          response.status(200).send("Trigger deleted successfully!");
+        });
       });
     });
   });
 };
-
-// const deleteTriggerById = (request, response) => {
-//   const id = parseInt(request.params.id);
-//   pool.query(queries.deleteTrigger, [id], (error, results) => {
-//     if (error) throw error;
-//     response.status(200).send("Trigger deleted successfully!");
-//   });
-// };
 
 module.exports = {
   getTriggers,

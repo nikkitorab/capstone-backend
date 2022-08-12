@@ -64,6 +64,11 @@ const updateData =
 
 const getAllOutputData = "SELECT * FROM data_output";
 
+const getSignificantData =
+  "SELECT * FROM data_output WHERE cohens_d>=0.5 OR cohens_d <= -0.5";
+
+const deleteData = "DELETE FROM data_output WHERE id = $1";
+
 module.exports = {
   getRelatedEntriesSymptomID,
   addEntries,
@@ -81,6 +86,8 @@ module.exports = {
   getData,
   updateData,
   getAllOutputData,
+  getSignificantData,
+  deleteData,
   // getRelatedEntriesSymptomTime,
   // deleteAllEntriesForSymptom,
   // deleteAllEntriesForTrigger,

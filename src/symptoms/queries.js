@@ -12,6 +12,8 @@ const addSymptom =
 
 //delete
 // const deleteEntryDataFK = "DELETE FROM entries_data WHERE symptom_id = $1";
+const deleteDataSymptomID = "DELETE FROM data_output WHERE symptom_id = $1";
+
 const deleteSymptomEntriesFK =
   "DELETE FROM symptom_entries WHERE symptom_id = $1";
 
@@ -27,6 +29,6 @@ module.exports = {
   addSymptom,
   deleteSymptomEntriesFK,
   deleteSymptom,
-  // deleteEntryDataFK,
+  deleteDataSymptomID,
   deleteAllEntriesForSymptom,
 };

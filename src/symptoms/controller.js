@@ -80,17 +80,19 @@ const addSymptom = (request, response) => {
 const deleteSymptomById = (request, response) => {
   const id = parseInt(request.params.id);
 
-  pool.query(queries.deleteAllEntriesForSymptom, [id], (error, results) => {
-    // pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
-    if (error) throw error;
-
-    pool.query(queries.deleteSymptomEntriesFK, [id], (error, results) => {
+  pool.query(queries.deleteDataSymptomID, [id], (error, results) => {
+    pool.query(queries.deleteAllEntriesForSymptom, [id], (error, results) => {
+      // pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
       if (error) throw error;
 
-      pool.query(queries.deleteSymptom, [id], (error, results) => {
+      pool.query(queries.deleteSymptomEntriesFK, [id], (error, results) => {
         if (error) throw error;
 
-        response.status(200).send("Symptom deleted successfully!");
+        pool.query(queries.deleteSymptom, [id], (error, results) => {
+          if (error) throw error;
+
+          response.status(200).send("Symptom deleted successfully!");
+        });
       });
     });
   });

@@ -15,6 +15,9 @@ router.get("/symptom-entries/:id", controller.getSymptomEntryById);
 // router.get("/symptom/:id", controller.getRelatedEntriesSymptomID);
 
 router.get("/data", analysis.getAllOutputData);
+router.get("/data/significant", analysis.getSignificantData);
+
+router.delete("/data/:id", analysis.deleteData);
 
 // router.get("/triggers", controller.getRelatedTriggerEntries);
 

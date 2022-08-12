@@ -64,6 +64,16 @@ const getAllOutputData = (request, response) => {
   });
 };
 
+// get all data where |cohens_d| >= 0.5 --> significant
+const getSignificantData = (request, response) => {
+  //sql query:
+  pool.query(queries.getSignificantData, (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptoms table
+    response.status(200).json(results.rows);
+  });
+};
+
 let getBySymptomAndTrigger = function (symptomID, triggerID) {
   return pool
     .query(queries.getAllForSymptomAndTrigger, [symptomID, triggerID])
@@ -258,11 +268,22 @@ const getStats = (symptomIDs, triggerIDs) => {
 // const getMeans = (symptomID, triggerID) => {
 // }
 
+const deleteData = (request, response) => {
+  const id = parseInt(request.params.id);
+  pool.query(queries.deleteData, [id], (error, results) => {
+    if (error) throw error;
+
+    response.status(200).send("data deleted successfully!");
+  });
+};
+
 module.exports = {
   getBySymptomAndTrigger,
   // getEntriesData,
   getAllIDs,
   getAllOutputData,
+  getSignificantData,
+  deleteData,
 
   // getTriggerEntries,
   // getLastSymptomEntry,
