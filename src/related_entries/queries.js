@@ -38,6 +38,32 @@ const getTriggerEntries =
 // "SELECT * FROM trigger_entries WHERE entry_time < (CURRENT_TIMESTAMP - 3600)";
 // "SELECT * FROM trigger_entries WHERE entry_time >= NOW() - INTERVAL 1 HOUR ORDER BY entry_time DESC";
 
+const getAllSymptomIDs = "SELECT id FROM symptoms";
+const getAllTriggerIDs = "SELECT id FROM triggers";
+
+// get ALL entries with symptom_id and trigger_id
+const getAllForSymptomAndTrigger =
+  "SELECT * FROM related_entries WHERE symptom_id = $1 AND trigger_id = $2";
+
+// get ALL entries with symptom_id and trigger_id where trigger_present == true
+const getAllTriggerPresent =
+  "SELECT * FROM related_entries WHERE symptom_id = $1 AND trigger_id = $2 AND trigger_present = true";
+
+// get ALL entries with symptom_id and trigger_id where trigger_present == false
+const getAllTriggerAbsent =
+  "SELECT * FROM related_entries WHERE symptom_id = $1 AND trigger_id = $2 AND trigger_present = false";
+
+const addData =
+  "INSERT INTO data_output (symptom_id, trigger_id, present_mean, absent_mean, cohens_d) VALUES ($1, $2, $3, $4, $5)";
+
+const getData =
+  "SELECT * FROM data_output WHERE symptom_id = $1 AND trigger_id = $2";
+
+const updateData =
+  "UPDATE data_output SET present_mean = $1, absent_mean = $2, cohens_d = $3 WHERE symptom_id = $4 AND trigger_id = $5";
+
+const getAllOutputData = "SELECT * FROM data_output";
+
 module.exports = {
   getRelatedEntriesSymptomID,
   addEntries,
@@ -46,6 +72,15 @@ module.exports = {
   getlastSymptomEntry,
   getSymptomEntryById,
   getTriggerEntries,
+  getAllForSymptomAndTrigger,
+  getAllSymptomIDs,
+  getAllTriggerIDs,
+  getAllTriggerPresent,
+  getAllTriggerAbsent,
+  addData,
+  getData,
+  updateData,
+  getAllOutputData,
   // getRelatedEntriesSymptomTime,
   // deleteAllEntriesForSymptom,
   // deleteAllEntriesForTrigger,
@@ -57,6 +92,17 @@ module.exports = {
 //   trigger_id INT,
 //   rating INT,
 //   trigger_present BOOLEAN,
+//   FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
+//   FOREIGN KEY (trigger_id) REFERENCES triggers(id)
+// );
+
+// CREATE TABLE data_output (
+//   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+//   symptom_id INT,
+//   trigger_id INT,
+//   present_mean FLOAT(8),
+//   absent_mean FLOAT(8),
+//   cohens_d FLOAT(8),
 //   FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
 //   FOREIGN KEY (trigger_id) REFERENCES triggers(id)
 // );

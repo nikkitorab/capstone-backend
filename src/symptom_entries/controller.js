@@ -4,6 +4,8 @@ const entriesController = require("../entries/controller");
 const entryQueries = require("../entries/queries");
 
 const relatedEntriesController = require("../related_entries/controller");
+const analysisController = require("../related_entries/analysis");
+
 //GET
 
 // GET ALL symptom_entries: query database, get json response from symptom_entries, send it back
@@ -60,6 +62,7 @@ const addSymptomEntry = (request, response) => {
     .then((results) => {
       response.status(201).send(results.rows[0]);
       relatedEntriesController.addRelatedEntries(symptom_id, rating);
+      analysisController.getAllIDs();
     })
     .catch((err) => {
       console.error(err);

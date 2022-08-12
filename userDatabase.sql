@@ -36,6 +36,21 @@ CREATE TABLE trigger_entries (
 
 
 
+
+CREATE TABLE data_output (
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    symptom_id INT,
+    trigger_id INT,
+    present_mean FLOAT(8),
+    absent_mean FLOAT(8),
+    cohens_d FLOAT(8),
+    FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
+    FOREIGN KEY (trigger_id) REFERENCES triggers(id)
+);
+
+
+
+
 CREATE TABLE entries_data (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     symptom_id INT,
@@ -49,18 +64,18 @@ CREATE TABLE entries_data (
     FOREIGN KEY (trigger_id) REFERENCES triggers(id)
 );
 -- trigger_present/trigger_absent are average symptom_entry ratings when that trigger is absent/present
-CREATE TABLE relationship_data (
+CREATE TABLE related_entries (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     symptom_id INT,
     trigger_id INT,
     rating INT,
-    present BOOLEAN,
+    trigger_present BOOLEAN,
     FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
     FOREIGN KEY (trigger_id) REFERENCES triggers(id)
 );
 
-ALTER TABLE entries_data
-DROP COLUMN symptom_count;
+ALTER TABLE related_entries
+DROP COLUMN present;
 
 -- *************** DB JOINS: ***************
 AUTHORS = USERS
@@ -75,8 +90,8 @@ AUTHORS = symptoms/triggers
 BOOKS = symptom_entries/trigger_entries
 
 
-ALTER TABLE entries_data
-ADD symptom_count INT;
+ALTER TABLE related_entries
+ADD trigger_present BOOLEAN;
 
 ALTER TABLE entries_data
 ADD trigger_present_count INT;
