@@ -14,6 +14,8 @@ const triggerEntryRoutes = require("./src/trigger_entries/routes");
 const usersRoutes = require("./src/users/routes");
 const entryDataRoutes = require("./src/entries/routes");
 
+const relatedEntriesRoutes = require("./src/related_entries/routes");
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,6 +31,7 @@ app.use("/trigger-entries", triggerEntryRoutes);
 
 app.use("/users", usersRoutes);
 app.use("/entries", entryDataRoutes);
+app.use("/related-entries", relatedEntriesRoutes);
 
 const port = 3000;
 app.listen(port, () => console.log(`app listening on port ${port}`));

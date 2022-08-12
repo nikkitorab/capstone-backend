@@ -55,7 +55,9 @@ const addTrigger = (request, response) => {
 //DELETE
 const deleteTriggerById = (request, response) => {
   const id = parseInt(request.params.id);
-  pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
+
+  pool.query(queries.deleteAllEntriesForTrigger, [id], (error, results) => {
+    // pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
     if (error) throw error;
 
     pool.query(queries.deleteTriggerEntriesFK, [id], (error, results) => {

@@ -49,6 +49,15 @@ CREATE TABLE entries_data (
     FOREIGN KEY (trigger_id) REFERENCES triggers(id)
 );
 -- trigger_present/trigger_absent are average symptom_entry ratings when that trigger is absent/present
+CREATE TABLE relationship_data (
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    symptom_id INT,
+    trigger_id INT,
+    rating INT,
+    present BOOLEAN,
+    FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
+    FOREIGN KEY (trigger_id) REFERENCES triggers(id)
+);
 
 ALTER TABLE entries_data
 DROP COLUMN symptom_count;

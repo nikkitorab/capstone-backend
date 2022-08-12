@@ -9,6 +9,8 @@ router.get("/:id", controller.getSymptomEntryById);
 // get all entries by symptom_id
 router.get("/symptoms/:symptom_id", controller.getAllEntriesForSymptom);
 
+router.get("/last", controller.getlastSymptomEntry);
+
 // DELETE all entries by symptom_id
 // router.delete("/symptoms/:symptom_id", controller.deleteAllEntriesForSymptom);
 

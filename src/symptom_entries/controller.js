@@ -1,7 +1,9 @@
 const pool = require("../../db");
 const queries = require("./queries");
 const entriesController = require("../entries/controller");
+const entryQueries = require("../entries/queries");
 
+const relatedEntriesController = require("../related_entries/controller");
 //GET
 
 // GET ALL symptom_entries: query database, get json response from symptom_entries, send it back
@@ -46,6 +48,14 @@ const getAllEntriesForSymptom = (request, response) => {
   );
 };
 
+const getlastSymptomEntry = (request, response) => {
+  const id = parseInt(request.params.id);
+  pool.query(queries.getlastSymptomEntry, (error, results) => {
+    if (error) throw error;
+    response.status(200).json(results.rows);
+  });
+};
+
 //POST
 
 //POST: add symptom
@@ -53,22 +63,93 @@ const addSymptomEntry = (request, response) => {
   const rating = request.body.rating;
   const symptom_id = request.body.symptom_id;
   const entry_time = new Date(Date.now()).toISOString();
-
   //add symptom entry to db:
-  pool.query(
-    queries.addSymptomEntry,
-    [rating, entry_time, symptom_id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      //UPDATE ENTRIES_DATA
-      entriesController.symptomEntryAdded(symptom_id, rating);
-      //if response status is OK, symptom_entry has been created successfully:
-      response.status(201).send("symptom entry created successfully!");
-    }
-  );
+  return pool
+    .query(queries.addSymptomEntry, [rating, entry_time, symptom_id])
+    .then((results) => {
+      response.status(201).send(results.rows[0]);
+      relatedEntriesController.addRelatedEntries(symptom_id, rating);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  // entriesController.addRelatedEntriesFromTime(symptom_id, entry_time, rating);
+
+  // return results.rows[0].id;
+  // response.status(201).json(results.rows); // SEND MEANS AND SD
 };
+
+// const addSymptomEntry = (request, response) => {
+//   const rating = request.body.rating;
+//   const symptom_id = request.body.symptom_id;
+//   const entry_time = new Date(Date.now()).toISOString();
+
+// let selectEntriesForTrigger = function (triggerID, occurred) {
+//   return pool
+//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
+//     .then((results) => {
+//       return results.rows;
+//     });
+// };
+
+// };
+
+// let selectEntriesForTrigger = function (triggerID, occurred) {
+//   return pool
+//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
+//     .then((results) => {
+//       return results.rows;
+//     });
+// };
+
+// let getEntriesForTrigger = selectEntriesForTrigger(triggerID);
+// console.log(getEntriesForTrigger); // Promise { <pending> }
+
+// getEntriesForTrigger.then(function (result) {
+//   console.log(result); // list of objects
+// });
+
+// *******************************
+
+// let selectEntriesForTrigger = function (triggerID, occurred) {
+//   return pool
+//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
+//     .then((results) => {
+//       return results.rows;
+//     });
+// };
+
+// let getEntriesForTrigger = selectEntriesForTrigger(triggerID);
+// console.log(getEntriesForTrigger); // Promise { <pending> }
+
+// getEntriesForTrigger.then(function (result) {
+//   console.log(result); // list of objects
+// });
+
+// let addSymptomEntry = function (rating, symptom_id) {
+
+// const entry_time = new Date(Date.now()).toISOString();
+//   return pool
+//     .query(queries.addSymptomEntry, [rating, entry_time, symptom_id])
+//     .then((results) => {
+//       return results.rows;
+//     })
+// .catch((err) => {
+//   console.error(err);
+// });;
+// };
+
+// let selectEntriesForTrigger = function (triggerID, occurred) {
+//   return pool
+//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
+//     .then((results) => {
+//       return results.rows;
+//     });
+// };
+
+// );
+// relatedEntriesController.addRelatedEntries(id, symptom_id);
 
 // DELETE ALL entries for SYMPTOM (from symptom_id fk):
 const deleteAllEntriesForSymptom = (request, response) => {
@@ -118,6 +199,7 @@ module.exports = {
   getSymptomEntryById,
   addSymptomEntry,
   getAllEntriesForSymptom,
+  getlastSymptomEntry,
   // deleteAllEntriesForSymptom,
   deleteSymptomEntry,
 };

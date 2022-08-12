@@ -3,6 +3,7 @@ const queries = require("./queries");
 // const entry_controller = require("./symptom_entry/controller");
 // const entriesForSymptom = require("./entryController");
 const entriesController = require("../entries/controller");
+const relatedEntriesController = require("../related_entries/controller");
 
 //GET
 
@@ -78,7 +79,9 @@ const addSymptom = (request, response) => {
 //DELETE   deleteEntryDataFK
 const deleteSymptomById = (request, response) => {
   const id = parseInt(request.params.id);
-  pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
+
+  pool.query(queries.deleteAllEntriesForSymptom, [id], (error, results) => {
+    // pool.query(queries.deleteEntryDataFK, [id], (error, results) => {
     if (error) throw error;
 
     pool.query(queries.deleteSymptomEntriesFK, [id], (error, results) => {

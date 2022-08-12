@@ -13,6 +13,12 @@ const getEntriesData = "SELECT * FROM entries_data";
 const getEntryByIDs =
   "SELECT * FROM entries_data WHERE symptom_id = $1 AND trigger_id = $2";
 
+const getEntriesBySymptomID =
+  "SELECT * FROM entries_data WHERE symptom_id = $1";
+
+const getEntriesByTriggerID =
+  "SELECT * FROM entries_data WHERE trigger_id = $1";
+
 const updateEntryDataTriggerAbsent =
   "UPDATE entries_data SET trigger_absent = trigger_absent+$1, trigger_absent_count = trigger_absent_count+1 WHERE symptom_id = $2 AND trigger_id = $3;";
 
@@ -45,6 +51,8 @@ module.exports = {
   deleteEntryData,
   updateEntryDataTriggerAbsent,
   updateEntryDataTriggerPresent,
+  getEntriesBySymptomID,
+  getEntriesByTriggerID,
 
   // getSymptomEntries,
   // getSymptomEntryById,

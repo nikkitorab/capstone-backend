@@ -11,9 +11,13 @@ const addSymptom =
 // when new symptom is created, update entries_data table to have rows for it
 
 //delete
-const deleteEntryDataFK = "DELETE FROM entries_data WHERE symptom_id = $1";
+// const deleteEntryDataFK = "DELETE FROM entries_data WHERE symptom_id = $1";
 const deleteSymptomEntriesFK =
   "DELETE FROM symptom_entries WHERE symptom_id = $1";
+
+const deleteAllEntriesForSymptom =
+  "DELETE FROM related_entries WHERE symptom_id = $1";
+
 const deleteSymptom = "DELETE FROM symptoms WHERE id = $1";
 
 module.exports = {
@@ -23,5 +27,6 @@ module.exports = {
   addSymptom,
   deleteSymptomEntriesFK,
   deleteSymptom,
-  deleteEntryDataFK,
+  // deleteEntryDataFK,
+  deleteAllEntriesForSymptom,
 };

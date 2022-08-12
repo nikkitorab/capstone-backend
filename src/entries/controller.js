@@ -1,6 +1,7 @@
 const pool = require("../../db");
 const queries = require("./queries");
 const symptomQueries = require("../symptoms/queries");
+const math = require("mathjs");
 
 const triggerQueries = require("../triggers/queries");
 
@@ -58,6 +59,37 @@ let addNewTriggerToEntries = function (triggerID) {
     // console.log(`******** U: ${us}`);
 
     return results.rows;
+  });
+};
+
+// // get entries_data by symptom_id:
+// let getEntriesBySymptom = function (symptomID) {
+//   return pool
+//     .query(queries.getEntriesBySymptomID, [symptomID])
+//     .then((results) => {
+//       console.log(`in get entries: ${results.rows}`);
+//       console.log(`len: ${results.rows.length}`);
+//       return results.rows;
+//     });
+// };
+
+const getEntriesBySymptom = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const symptom_id = parseInt(request.params.symptom_id);
+  pool.query(queries.getEntriesBySymptomID, [symptom_id], (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptom_entries table
+    response.status(200).json(results.rows);
+  });
+};
+
+const getEntriesByTrigger = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const trigger_id = parseInt(request.params.trigger_id);
+  pool.query(queries.getEntriesByTriggerID, [trigger_id], (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptom_entries table
+    response.status(200).json(results.rows);
   });
 };
 
@@ -153,6 +185,62 @@ const triggerEntryAdded = (triggerID, occurred) => {
 //   console.log(result); // list of objects
 // });
 
+//*******************************************************************************************
+// ANALYSIS: DIFFERENCE OF MEANS, COHENS D FOR EFFECT SIZE
+//*******************************************************************************************
+// let getStandardDeviations = function (symptomID) {
+//   return pool
+//     .query(queries.getRelatedEntriesSymptomID, [symptomID])
+//     .then((results) => {
+//       const present = [];
+//       // let presentSum = 0;
+//       const absent = [];
+//       // let absentSum = 0;
+
+//       for (const entry of results.rows) {
+//         if (entry.occurred) {
+//           present.push(entry);
+//           // presentSum += entry.rating;
+//         } else {
+//           absent.push(entry);
+//           // absentSum += entry.rating;
+//         }
+//       }
+//       // get means:
+//       const presentMean = math.mean(present);
+//       const absentMean = math.mean(absent);
+
+//       const presentSd = math.std(present);
+//       const absentSd = math.std(absent)
+
+//       console.log(`in get entries: ${results.rows}`);
+//       console.log(`len: ${results.rows.length}`);
+//       return results.rows;
+//     });
+// };
+
+// const getMeans = (entriesData) => {
+//   const output = []
+
+//   for(const pair in entriesData){
+//     const temp = {
+//       "symptomID" : pair.symptom_id,
+//       "triggerID" : pair.trigger_id,
+//     }
+
+//   }
+
+// }
+
+const deleteEntryData = (request, response) => {
+  const id = parseInt(request.params.id);
+  pool.query(queries.deleteEntryData, [id], (error, results) => {
+    if (error) throw error;
+
+    response.status(200).send("Symptom entrydeleted successfully!");
+  });
+};
+
 module.exports = {
   selectEntriesForSymptom,
   selectEntriesForTrigger,
@@ -160,6 +248,9 @@ module.exports = {
   symptomEntryAdded,
   addNewSymptomToEntries,
   addNewTriggerToEntries,
+  getEntriesBySymptom,
+  getEntriesByTrigger,
+  deleteEntryData,
   // selectEntriesForSymptom,
   // testing,
   // analyzeEntryData,
