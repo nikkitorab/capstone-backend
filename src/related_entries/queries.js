@@ -65,7 +65,11 @@ const updateData =
 const getAllOutputData = "SELECT * FROM data_output";
 
 const getSignificantData =
-  "SELECT * FROM data_output WHERE cohens_d>=0.5 OR cohens_d <= -0.5";
+  // "SELECT * FROM data_output WHERE cohens_d>=0.5 OR cohens_d <= -0.5";
+  "SELECT * FROM data_output WHERE cohens_d>=0.5"; // IF COHENS D IS NEGATIVE ITS HAVING THE OPPOSITE EFFECT????
+
+const getSignificantDataForTrigger =
+  "SELECT * FROM data_output WHERE trigger_id = $1 AND cohens_d>=0.5";
 
 const deleteData = "DELETE FROM data_output WHERE id = $1";
 
@@ -88,6 +92,7 @@ module.exports = {
   getAllOutputData,
   getSignificantData,
   deleteData,
+  getSignificantDataForTrigger,
   // getRelatedEntriesSymptomTime,
   // deleteAllEntriesForSymptom,
   // deleteAllEntriesForTrigger,
