@@ -15,6 +15,9 @@ const getAllEntriesForSymptom =
 const addEntries =
   "INSERT INTO related_entries (symptom_id, trigger_id, rating, trigger_present) VALUES ($1, $2, $3,$4)";
 
+const addEntriesManually =
+  "INSERT INTO related_entries (symptom_id, trigger_id, rating, trigger_present) VALUES ($1, $2, $3,$4)";
+
 const getlastSymptomEntry =
   "SELECT * FROM symptom_entries WHERE id = (SELECT MAX(id) FROM symptom_entries)";
 // const deleteAllEntriesForSymptom =
@@ -66,7 +69,7 @@ const getAllOutputData = "SELECT * FROM data_output";
 
 const getSignificantData =
   // "SELECT * FROM data_output WHERE cohens_d>=0.5 OR cohens_d <= -0.5";
-  "SELECT * FROM data_output WHERE cohens_d>=0.5"; // IF COHENS D IS NEGATIVE ITS HAVING THE OPPOSITE EFFECT????
+  "SELECT * FROM data_output WHERE cohens_d>=0.5 ORDER BY cohens_d DESC;"; // IF COHENS D IS NEGATIVE ITS HAVING THE OPPOSITE EFFECT????
 
 const getSignificantDataForTrigger =
   "SELECT * FROM data_output WHERE trigger_id = $1 AND cohens_d>=0.5";
@@ -93,6 +96,7 @@ module.exports = {
   getSignificantData,
   deleteData,
   getSignificantDataForTrigger,
+  addEntriesManually,
   // getRelatedEntriesSymptomTime,
   // deleteAllEntriesForSymptom,
   // deleteAllEntriesForTrigger,

@@ -46,7 +46,7 @@ const addTrigger = (request, response) => {
       if (error) {
         throw error;
       }
-      entriesController.addNewTriggerToEntries(results.rows[0].id);
+      // entriesController.addNewTriggerToEntries(results.rows[0].id);
       response.status(201).send("trigger created successfully!");
     }
   );

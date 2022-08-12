@@ -99,7 +99,8 @@ ADD trigger_present_count INT;
 ALTER TABLE entries_data
 ADD trigger_absent_count INT;
 
-
+INSERT INTO related_entries(symptom_id,trigger_id,rating,trigger_present) Values(67,21,9,true);
+symptom_id, trigger_id, rating, trigger_present
 
 -- *************** POPULATING THE TABLES: ***************
 
@@ -149,3 +150,8 @@ CREATE TABLE triggers (
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+
+
+
+INSERT INTO related_entries(symptom_id,trigger_id,rating,trigger_present) Values(68,25, 8,true);

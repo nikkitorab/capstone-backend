@@ -22,16 +22,6 @@ const getSymptomById = (request, response) => {
   //query params are strings, so to get it as an int we need to parse:
   const id = parseInt(request.params.id);
 
-  //*******************************************************************************************
-  // CALLS FUNCTION IN ENTRIES: GETS ALL RELATED TRIGGER/SYMPTOM ENTRIES
-  //*******************************************************************************************
-  // let getEntriesForSymptom = entriesController.selectEntriesForSymptom(id);
-  // console.log(getEntriesForSymptom); // Promise { <pending> }
-
-  // getEntriesForSymptom.then(function (result) {
-  //   console.log(result); // "Some User token"
-  // });
-
   pool.query(queries.getSymptomById, [id], (error, results) => {
     if (error) throw error;
     //if response status is OK, return all rows in symptom_entries table
@@ -68,7 +58,7 @@ const addSymptom = (request, response) => {
       // console.log(results);
       // console.log("***");
       // console.log(results.rows[0].id);
-      entriesController.addNewSymptomToEntries(results.rows[0].id);
+      // entriesController.addNewSymptomToEntries(results.rows[0].id);
       // result.rows[0].id;
       //if response status is OK, date has been created successfully:
       response.status(201).send("symptom created successfully!");

@@ -13,6 +13,34 @@ const getAllRelatedEntries = (request, response) => {
   });
 };
 
+// addEntries
+//POST: add symptom symptom_id, trigger_id, rating, trigger_present
+const postEntries = (request, response) => {
+  //get request body by destructuring request object body
+  // const { symptom_id, trigger_id, rating, trigger_present } = request.body;
+  const rating = request.body.rating;
+  const symptom_id = request.body.symptom_id;
+  const trigger_id = request.body.trigger_id;
+  const trigger_present = request.body.trigger_present;
+  //add symptom to db
+  pool.query(
+    queries.addEntriesManually,
+    [symptom_id, trigger_id, rating, trigger_present],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      // console.log(results);
+      // console.log("***");
+      // console.log(results.rows[0].id);
+      // entriesController.addNewSymptomToEntries(results.rows[0].id);
+      // result.rows[0].id;
+      //if response status is OK, date has been created successfully:
+      response.status(201).send("related entry created successfully!");
+    }
+  );
+};
+
 let getRelatedTriggerEntries = function () {
   return pool.query(queries.getTriggerEntries).then((results) => {
     return results.rows;
@@ -28,10 +56,10 @@ let getEntriesForTrigger = getRelatedTriggerEntries();
 //*******************************************************************************************
 const addRelatedEntries = (symptomID, rating) => {
   getEntriesForTrigger.then(function (result) {
-    console.log(result); // list of objects
+    // console.log(result); // list of objects
 
     for (const triggerEntry of result) {
-      console.log(`in the loop: ${triggerEntry}`);
+      // console.log(`in the loop: ${triggerEntry}`);
       const triggerID = triggerEntry.trigger_id;
       const triggerPresent = triggerEntry.occurred;
       pool
@@ -43,7 +71,7 @@ const addRelatedEntries = (symptomID, rating) => {
         ])
         .then((postResult) => {
           // if (error) throw error;
-          console.log(postResult.rows);
+          // console.log(postResult.rows);
           // return results.rows;
         });
     }
@@ -181,6 +209,7 @@ module.exports = {
   getSymptomEntryById,
   getRelatedEntriesSymptomID,
   getRelatedTriggerEntries,
+  postEntries,
   // getTriggerEntries,
   // getLastSymptomEntry,
 };

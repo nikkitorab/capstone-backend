@@ -57,6 +57,7 @@ const addTriggerEntry = (request, response) => {
         throw error;
       }
       //if response status is OK, trigger_entry has been created successfully:
+      // entriesController.addNewTriggerToEntries(results.rows[0].id);
       response.status(201).send("trigger entry created successfully!");
     }
   );

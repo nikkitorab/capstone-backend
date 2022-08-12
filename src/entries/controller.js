@@ -110,6 +110,10 @@ let selectEntriesForSymptom = function (symptomID) {
 //*******************************************************************************************
 // CALLED WHEN NEW SYMPTOM_ENTRY IS ADDED: UPDATES ENTRIES_DATA
 //*******************************************************************************************
+
+
+
+
 let symptomEntryAdded = function (symptomID, rating) {
   // loop trhough list of all triggers, add to to entries_data table with symptom_id that was passed in
   return pool
@@ -178,6 +182,15 @@ const triggerEntryAdded = (triggerID, occurred) => {
 //*******************************************************************************************
 // CALLS selectEntriesForTrigger: GETS ALL RELATED TRIGGER/SYMPTOM ENTRIES BY trigger_id
 //*******************************************************************************************
+
+// let selectEntriesForTrigger = function (triggerID, occurred) {
+//   return pool
+//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
+//     .then((results) => {
+//       return results.rows;
+//     });
+// };
+
 // let getEntriesForTrigger = selectEntriesForTrigger(triggerID);
 // console.log(getEntriesForTrigger); // Promise { <pending> }
 
