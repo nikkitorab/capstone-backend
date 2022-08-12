@@ -32,7 +32,7 @@ const getSymptomEntryById = "SELECT * FROM symptom_entries WHERE id = $1";
 
 const getTriggerEntries =
   // "SELECT * FROM trigger_entries";
-  "SELECT * FROM trigger_entries WHERE entry_time >= NOW() - '1 hour'::INTERVAL";
+  "SELECT * FROM trigger_entries WHERE entry_time >= NOW() - '1 day'::INTERVAL";
 
 // "SELECT * FROM trigger_entries WHERE (date_part('epoch', $1)-1) <= date_part('epoch', entry_time)";
 // "SELECT * FROM trigger_entries WHERE entry_time < (CURRENT_TIMESTAMP - 3600)";
