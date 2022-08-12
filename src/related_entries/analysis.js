@@ -70,6 +70,7 @@ const getSignificantData = (request, response) => {
   pool.query(queries.getSignificantData, (error, results) => {
     if (error) throw error;
     //if response status is OK, return all rows in symptoms table
+    console.log(results.rows);
     response.status(200).json(results.rows);
   });
 };

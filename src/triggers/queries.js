@@ -4,6 +4,8 @@ const getTriggerById = "SELECT * FROM triggers WHERE id = $1";
 
 const getAllTriggersForUser = "SELECT * FROM triggers WHERE user_id = $1";
 
+const getTriggerNameById = "SELECT name FROM triggers WHERE id = $1";
+
 //post
 const addTrigger =
   "INSERT INTO triggers (name, rating_type, user_id) VALUES ($1, $2, $3) RETURNING id";
@@ -27,5 +29,6 @@ module.exports = {
   deleteTrigger,
   deleteAllEntriesForTrigger,
   deleteDataTriggerID,
+  getTriggerNameById,
   // deleteEntryDataFK,
 };

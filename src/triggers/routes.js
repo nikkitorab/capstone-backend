@@ -6,6 +6,8 @@ router.get("/", controller.getTriggers);
 
 router.get("/:id", controller.getTriggerById);
 
+router.get("/name/:id", controller.getTriggerNameById);
+
 // //get all triggers by user_id
 router.get("/users/:user_id", controller.getAllTriggersForUser);
 

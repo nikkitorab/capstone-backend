@@ -24,6 +24,16 @@ const getTriggerById = (request, response) => {
   });
 };
 
+const getTriggerNameById = (request, response) => {
+  const id = parseInt(request.params.id);
+
+  pool.query(queries.getTriggerNameById, [id], (error, results) => {
+    if (error) throw error;
+    console.log(results.rows);
+    response.status(200).json(results.rows);
+  });
+};
+
 // GET ALL triggers for USER (from user_id fk):
 const getAllTriggersForUser = (request, response) => {
   const user_id = parseInt(request.params.user_id);
@@ -80,4 +90,5 @@ module.exports = {
   getAllTriggersForUser,
   addTrigger,
   deleteTriggerById,
+  getTriggerNameById,
 };
