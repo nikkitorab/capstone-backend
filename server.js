@@ -30,7 +30,7 @@ app.use("/symptom-entries", symptomEntryRoutes);
 app.use("/trigger-entries", triggerEntryRoutes);
 
 app.use("/users", usersRoutes);
-app.use("/entries", entryDataRoutes);
+// app.use("/entries", entryDataRoutes);
 app.use("/related-entries", relatedEntriesRoutes);
 
 const port = 3000;

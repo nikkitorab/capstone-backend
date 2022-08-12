@@ -37,7 +37,7 @@ const addSymptomToEntries =
 const addEntryData =
   "INSERT INTO entries_data (symptom_id, trigger_id, trigger_present, trigger_absent, trigger_present_count, trigger_absent_count) VALUES ($1, $2, $3, $4, $5, $6)";
 
-const deleteEntryData = "DELETE FROM entries_data WHERE symptom_id = $1";
+const deleteEntryData = "DELETE FROM entries_data WHERE id = $1";
 
 // "SELECT * FROM symptom_entries CROSS JOIN trigger_entries WHERE symptom_entries.symptom_id = $1 AND (symptom_entries.entry_time - 1) <= trigger_entries.entry_time AND (trigger_entries.entry_time+12) >= symptom_entries.entry_time ";
 // to_timestamp(extract(epoch from DATE)/2)

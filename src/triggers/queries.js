@@ -11,7 +11,7 @@ const addTrigger =
 //delete
 // const deleteEntryDataFK = "DELETE FROM entries_data WHERE trigger_id = $1";
 const deleteAllEntriesForTrigger =
-  "DELETE * FROM related_entries WHERE trigger_id = $1";
+  "DELETE FROM related_entries WHERE trigger_id = $1";
 const deleteTriggerEntriesFK =
   "DELETE FROM trigger_entries WHERE trigger_id = $1";
 const deleteTrigger = "DELETE FROM triggers WHERE id = $1";
@@ -23,5 +23,6 @@ module.exports = {
   addTrigger,
   deleteTriggerEntriesFK,
   deleteTrigger,
+  deleteAllEntriesForTrigger,
   // deleteEntryDataFK,
 };
