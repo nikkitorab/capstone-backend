@@ -15,15 +15,6 @@ const getSymptomEntries = (request, response) => {
   });
 };
 
-// GET all symptom_entries for symptom_id (FK!!!):
-// const getSymptomEntryByFK = (request, response) => {
-//   const id = parseInt(request.params.id);
-//   pool.query(queries.getSymptomEntryByFK, [symptom_id], (error, results) => {
-//     if (error) throw error;
-//     response.status(200).json(results.rows);
-//   });
-// };
-
 // GET ONE symptom_entry by id:
 const getSymptomEntryById = (request, response) => {
   const id = parseInt(request.params.id);
@@ -73,105 +64,21 @@ const addSymptomEntry = (request, response) => {
     .catch((err) => {
       console.error(err);
     });
-
-  // entriesController.addRelatedEntriesFromTime(symptom_id, entry_time, rating);
-
-  // return results.rows[0].id;
-  // response.status(201).json(results.rows); // SEND MEANS AND SD
 };
-
-// const addSymptomEntry = (request, response) => {
-//   const rating = request.body.rating;
-//   const symptom_id = request.body.symptom_id;
-//   const entry_time = new Date(Date.now()).toISOString();
-
-// let selectEntriesForTrigger = function (triggerID, occurred) {
-//   return pool
-//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
-//     .then((results) => {
-//       return results.rows;
-//     });
-// };
-
-// };
-
-// let selectEntriesForTrigger = function (triggerID, occurred) {
-//   return pool
-//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
-//     .then((results) => {
-//       return results.rows;
-//     });
-// };
-
-// let getEntriesForTrigger = selectEntriesForTrigger(triggerID);
-// console.log(getEntriesForTrigger); // Promise { <pending> }
-
-// getEntriesForTrigger.then(function (result) {
-//   console.log(result); // list of objects
-// });
-
-// *******************************
-
-// let selectEntriesForTrigger = function (triggerID, occurred) {
-//   return pool
-//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
-//     .then((results) => {
-//       return results.rows;
-//     });
-// };
-
-// let getEntriesForTrigger = selectEntriesForTrigger(triggerID);
-// console.log(getEntriesForTrigger); // Promise { <pending> }
-
-// getEntriesForTrigger.then(function (result) {
-//   console.log(result); // list of objects
-// });
-
-// let addSymptomEntry = function (rating, symptom_id) {
-
-// const entry_time = new Date(Date.now()).toISOString();
-//   return pool
-//     .query(queries.addSymptomEntry, [rating, entry_time, symptom_id])
-//     .then((results) => {
-//       return results.rows;
-//     })
-// .catch((err) => {
-//   console.error(err);
-// });;
-// };
-
-// let selectEntriesForTrigger = function (triggerID, occurred) {
-//   return pool
-//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
-//     .then((results) => {
-//       return results.rows;
-//     });
-// };
-
-// );
-// relatedEntriesController.addRelatedEntries(id, symptom_id);
 
 // DELETE ALL entries for SYMPTOM (from symptom_id fk):
-const deleteAllEntriesForSymptom = (request, response) => {
-  //query params are strings, so to get it as an int we need to parse:
-  const symptom_id = parseInt(request.params.symptom_id);
-  pool.query(
-    queries.getAllEntriesForSymptom,
-    [symptom_id],
-    (error, results) => {
-      if (error) throw error;
-      //if response status is OK, return all rows in symptom_entries table
-      response.status(200).json(results.rows);
-    }
-  );
-};
-
-// const deleteSymptomEntry = (request, response) => {
-//   const id = parseInt(request.params.id);
-//   pool.query(queries.deleteSymptomEntry, [id], (error, results) => {
-//     if (error) throw error;
-//     response.status(200).send("Symptom entry deleted successfully!");
-//   });
+// const deleteAllEntriesForSymptom = (request, response) => {
+//   //query params are strings, so to get it as an int we need to parse:
+//   const symptom_id = parseInt(request.params.symptom_id);
+//   pool.query(
+//     queries.getAllEntriesForSymptom,
+//     [symptom_id],
+//     (error, results) => {
+//       if (error) throw error;
+//       //if response status is OK, return all rows in symptom_entries table
+//       response.status(200).json(results.rows);
+//     }
+//   );
 // };
 
 const deleteSymptomEntry = (request, response) => {
@@ -181,19 +88,8 @@ const deleteSymptomEntry = (request, response) => {
 
     response.status(200).send("Symptom entrydeleted successfully!");
   });
-
-  // then delete everything with the fk
 };
 
-// const x = (id) => {
-//   const deleteSymptomEntry = (request, response) => {
-//     const id = parseInt(request.params.id);
-//     pool.query(queries.deleteSymptomEntry, [id], (error, results) => {
-//       if (error) throw error;
-//       response.status(200).send("Symptom entry deleted successfully!");
-//     });
-//   };
-// };
 module.exports = {
   getSymptomEntries,
   getSymptomEntryById,
