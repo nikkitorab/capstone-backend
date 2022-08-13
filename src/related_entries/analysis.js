@@ -75,6 +75,16 @@ const getSignificantData = (request, response) => {
   });
 };
 
+const getSignificantTriggers = (request, response) => {
+  //sql query:
+  pool.query(queries.getSignificantTriggers, (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptoms table
+    console.log(results.rows);
+    response.status(200).json(results.rows);
+  });
+};
+
 const getSignificantDataForTrigger = (request, response) => {
   //query params are strings, so to get it as an int we need to parse:
   const id = parseInt(request.params.id);
@@ -297,6 +307,7 @@ module.exports = {
   getSignificantData,
   deleteData,
   getSignificantDataForTrigger,
+  getSignificantTriggers,
 
   // getTriggerEntries,
   // getLastSymptomEntry,

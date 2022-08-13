@@ -21,6 +21,8 @@ router.delete("/data/:id", analysis.deleteData);
 
 router.get("/data/sig/trigger/:id", analysis.getSignificantDataForTrigger);
 
+router.get("/data/sig/trigger", analysis.getSignificantTriggers);
+
 // make new related entry
 router.post("/", controller.postEntries);
 

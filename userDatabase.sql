@@ -154,4 +154,4 @@ CREATE TABLE triggers (
 
 
 
-INSERT INTO related_entries(symptom_id,trigger_id,rating,trigger_present) Values(68,25, 8,true);
+INSERT INTO related_entries(symptom_id,trigger_id,rating,trigger_present) Values(76,33, 1, false);
