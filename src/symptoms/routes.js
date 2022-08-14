@@ -8,6 +8,8 @@ router.get("/", controller.getSymptoms);
 //get symptom by id
 router.get("/:id", controller.getSymptomById);
 
+router.get("/name/:id", controller.getSymptomNameById);
+
 // get all symptoms by user_id
 router.get("/users/:user_id", controller.getAllSymptomsForUser);
 

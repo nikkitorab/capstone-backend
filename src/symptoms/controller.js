@@ -29,6 +29,17 @@ const getSymptomById = (request, response) => {
   });
 };
 
+const getSymptomNameById = (request, response) => {
+  //query params are strings, so to get it as an int we need to parse:
+  const id = parseInt(request.params.id);
+
+  pool.query(queries.getSymptomNameById, [id], (error, results) => {
+    if (error) throw error;
+    //if response status is OK, return all rows in symptom_entries table
+    response.status(200).json(results.rows);
+  });
+};
+
 // GET ALL symptoms for USER (from user_id fk):
 const getAllSymptomsForUser = (request, response) => {
   //query params are strings, so to get it as an int we need to parse:
@@ -104,4 +115,5 @@ module.exports = {
   getAllSymptomsForUser,
   addSymptom,
   deleteSymptomById,
+  getSymptomNameById,
 };
