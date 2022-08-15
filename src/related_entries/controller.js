@@ -96,8 +96,44 @@ const getRelatedEntriesSymptomID = (request, response) => {
 };
 
 //*******************************************************************************************
-// MOST RECENT VERSION OF addRelatedEntries
+// GET SIGNIFICANT SYMPTOM IDS/NAMES
 //*******************************************************************************************
+let getSymptomNames = function (id) {
+  return pool.query(queries.getSymptomNameById, [id]).then((results) => {
+    return results.rows;
+  });
+};
+
+let getSymptomNamesByIds = getSymptomNames();
+// console.log(getEntriesForTrigger); // Promise { <pending> }
+
+const getSignifSymptomNames = () => {
+  pool.query(queries.getSignificantSymptomIDs, (error, results) => {
+    if (error) throw error;
+    // getSymptomIDs.then(function (result) {
+    // console.log(result); // list of objects
+    const names = {};
+
+    // for (const symptom of results) {
+    //   const id = parseInt(symptom);
+    //   // console.log(`in the loop: ${triggerEntry}`);
+    //   // const triggerID = triggerEntry.trigger_id;
+    //   // const triggerPresent = triggerEntry.occurred;
+    //   const name = getSymptomNamesByIds(id).then(function (result) {
+    //     return result;
+
+    //     // .query(queries.getSymptomNameById)
+    //     // .then((nameResult) => {
+    //     // if (error) throw error;
+    //     // console.log(postResult.rows);
+    //     // return results.rows;
+    //   });
+    //   console.log(`in func, should print symp name: ${name}`);
+    //   // }
+    // }
+  });
+};
+
 // const addRelatedEntries = (request, response) => {
 //   const symptomEntryID = request.body.symptomEntryID;
 
@@ -210,6 +246,7 @@ module.exports = {
   getRelatedEntriesSymptomID,
   getRelatedTriggerEntries,
   postEntries,
+  getSignifSymptomNames,
   // getTriggerEntries,
   // getLastSymptomEntry,
 };

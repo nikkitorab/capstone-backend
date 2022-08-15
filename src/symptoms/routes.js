@@ -5,6 +5,8 @@ const router = Router();
 
 router.get("/", controller.getSymptoms);
 
+router.get("/names", controller.getNames);
+
 //get symptom by id
 router.get("/:id", controller.getSymptomById);
 

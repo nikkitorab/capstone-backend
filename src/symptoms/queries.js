@@ -1,5 +1,6 @@
 //GET
 const getSymptoms = "SELECT * FROM symptoms";
+
 const getSymptomById = "SELECT * FROM symptoms WHERE id = $1";
 
 const getAllSymptomsForUser = "SELECT * FROM symptoms WHERE user_id = $1";

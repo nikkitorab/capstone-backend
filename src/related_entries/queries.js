@@ -79,6 +79,11 @@ const deleteData = "DELETE FROM data_output WHERE id = $1";
 const getSignificantTriggers =
   "SELECT trigger_id FROM data_output ORDER BY cohens_d DESC";
 
+const getSignificantSymptomIDs =
+  "SELECT symptom_id FROM data_output ORDER BY cohens_d DESC";
+
+const getSymptomNameById = "SELECT name FROM symptoms WHERE id = $1";
+
 module.exports = {
   getRelatedEntriesSymptomID,
   addEntries,
@@ -101,6 +106,8 @@ module.exports = {
   getSignificantDataForTrigger,
   addEntriesManually,
   getSignificantTriggers,
+  getSignificantSymptomIDs,
+  getSymptomNameById,
   // getRelatedEntriesSymptomTime,
   // deleteAllEntriesForSymptom,
   // deleteAllEntriesForTrigger,

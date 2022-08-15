@@ -23,6 +23,8 @@ router.get("/data/sig/trigger/:id", analysis.getSignificantDataForTrigger);
 
 router.get("/data/sig/trigger", analysis.getSignificantTriggers);
 
+// router.get("/data/sig/symptom", controller.getSignifSymptomNames);
+
 // make new related entry
 router.post("/", controller.postEntries);
 
