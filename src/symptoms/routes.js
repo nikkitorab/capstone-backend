@@ -7,8 +7,6 @@ router.get("/", controller.getSymptoms);
 
 router.get("/names", controller.getNames);
 
-
-
 //get symptom by id
 router.get("/:id", controller.getSymptomById);
 
@@ -23,8 +21,4 @@ router.post("/", controller.addSymptom);
 // delete symptom by id
 router.delete("/:id", controller.deleteSymptomById);
 
-// module.exports = {
-//   router,
-//   entriesController
-// }
 module.exports = router;

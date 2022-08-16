@@ -43,10 +43,7 @@ let getEntriesForTrigger = getRelatedTriggerEntries();
 //*******************************************************************************************
 const addRelatedEntries = (symptomID, rating) => {
   getEntriesForTrigger.then(function (result) {
-    // console.log(result); // list of objects
-
     for (const triggerEntry of result) {
-      // console.log(`in the loop: ${triggerEntry}`);
       const triggerID = triggerEntry.trigger_id;
       const triggerPresent = triggerEntry.occurred;
       pool
@@ -92,7 +89,6 @@ let getSymptomNames = function (id) {
 };
 
 let getSymptomNamesByIds = getSymptomNames();
-// console.log(getEntriesForTrigger); // Promise { <pending> }
 
 const getSignifSymptomNames = () => {
   pool.query(queries.getSignificantSymptomIDs, (error, results) => {
@@ -102,39 +98,9 @@ const getSignifSymptomNames = () => {
   });
 };
 
-//*******************************************************************************************
-// GET VALUES FROM PROMISE:
-//*******************************************************************************************
-
-// let selectEntriesForTrigger = function (triggerID, occurred) {
-//   return pool
-//     .query(queries.getRelatedEntriesTriggerID, [triggerID, occurred])
-//     .then((results) => {
-//       return results.rows;
-//     });
-// };
-
-// let getEntriesForTrigger = selectEntriesForTrigger(triggerID);
-// console.log(getEntriesForTrigger); // Promise { <pending> }
-
-// getEntriesForTrigger.then(function (result) {
-//   console.log(result); // list of objects
-// });
-
-// CREATE TABLE related_entries (
-//   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-//   symptom_id INT,
-//   trigger_id INT,
-//   rating INT,
-//   trigger_present BOOLEAN,
-//   FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
-//   FOREIGN KEY (trigger_id) REFERENCES triggers(id)
-// );
-
 module.exports = {
   addRelatedEntries,
   getAllRelatedEntries,
-  // addRelatedEntriesFromTime,
   getSymptomEntryById,
   getRelatedEntriesSymptomID,
   getRelatedTriggerEntries,

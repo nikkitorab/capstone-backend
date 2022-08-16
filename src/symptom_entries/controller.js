@@ -67,21 +67,6 @@ const addSymptomEntry = (request, response) => {
     });
 };
 
-// DELETE ALL entries for SYMPTOM (from symptom_id fk):
-// const deleteAllEntriesForSymptom = (request, response) => {
-//   //query params are strings, so to get it as an int we need to parse:
-//   const symptom_id = parseInt(request.params.symptom_id);
-//   pool.query(
-//     queries.getAllEntriesForSymptom,
-//     [symptom_id],
-//     (error, results) => {
-//       if (error) throw error;
-//       //if response status is OK, return all rows in symptom_entries table
-//       response.status(200).json(results.rows);
-//     }
-//   );
-// };
-
 const deleteSymptomEntry = (request, response) => {
   const id = parseInt(request.params.id);
   pool.query(queries.deleteSymptomEntry, [id], (error, results) => {
