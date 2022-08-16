@@ -79,12 +79,7 @@ const addSymptom = (request, response) => {
       if (error) {
         throw error;
       }
-      // console.log(results);
-      // console.log("***");
-      // console.log(results.rows[0].id);
-      // entriesController.addNewSymptomToEntries(results.rows[0].id);
-      // result.rows[0].id;
-      //if response status is OK, date has been created successfully:
+
       response.status(201).send("symptom created successfully!");
     }
   );
@@ -111,16 +106,6 @@ const deleteSymptomById = (request, response) => {
     });
   });
 };
-// const deleteSymptomById = (request, response) => {
-//   const id = parseInt(request.params.id);
-//   pool.query(queries.deleteSymptom, [id], (error, results) => {
-//     if (error) throw error;
-
-//     response.status(200).send("Symptom deleted successfully!");
-//   });
-
-//   // then delete everything with the fk
-// };
 
 module.exports = {
   getSymptoms,

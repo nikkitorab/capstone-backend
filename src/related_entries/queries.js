@@ -84,8 +84,7 @@ const getSignificantSymptomIDs =
 
 const getSymptomNameById = "SELECT name FROM symptoms WHERE id = $1";
 
-const getCompletedSymptomEntries =
-  "SELECT * FROM symptom_entries WHERE entry_time >= NOW() - '1 day'::INTERVAL";
+
 
 module.exports = {
   getRelatedEntriesSymptomID,
@@ -111,29 +110,7 @@ module.exports = {
   getSignificantTriggers,
   getSignificantSymptomIDs,
   getSymptomNameById,
-  getCompletedSymptomEntries,
-  // getRelatedEntriesSymptomTime,
-  // deleteAllEntriesForSymptom,
-  // deleteAllEntriesForTrigger,
+
 };
 
-// CREATE TABLE related_entries (
-//   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-//   symptom_id INT,
-//   trigger_id INT,
-//   rating INT,
-//   trigger_present BOOLEAN,
-//   FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
-//   FOREIGN KEY (trigger_id) REFERENCES triggers(id)
-// );
 
-// CREATE TABLE data_output (
-//   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-//   symptom_id INT,
-//   trigger_id INT,
-//   present_mean FLOAT(8),
-//   absent_mean FLOAT(8),
-//   cohens_d FLOAT(8),
-//   FOREIGN KEY (symptom_id) REFERENCES symptoms(id),
-//   FOREIGN KEY (trigger_id) REFERENCES triggers(id)
-// );
