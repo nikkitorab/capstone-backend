@@ -30,5 +30,10 @@ app.use("/related-entries", relatedEntriesRoutes);
 
 app.use("/completed", completedRoutes);
 
-const port = 3000;
-app.listen(port, () => console.log(`app listening on port ${port}`));
+// const port = 3000;
+
+// app.listen(port, () => console.log(`app listening on port ${port}`));
+
+app.listen(process.env.PORT, () =>
+  console.log(`app listening on port ${process.env.PORT}`)
+);
