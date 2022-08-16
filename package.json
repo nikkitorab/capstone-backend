@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nikkitorab/capstone-backend.git"
@@ -15,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/nikkitorab/capstone-backend/issues"
   },
+  "engines": {
+    "node": "v16.16.0"
+},
   "homepage": "https://github.com/nikkitorab/capstone-backend#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
