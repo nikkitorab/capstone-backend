@@ -1,9 +1,14 @@
 const getCompletedSymptomEntries =
-  "SELECT symptom_id FROM symptom_entries WHERE entry_time >= NOW() - '1 day'::INTERVAL";
+  "SELECT * FROM symptom_entries WHERE entry_time >= NOW() - '1 day'::INTERVAL";
+
+const getSymptoms = "SELECT * FROM symptoms";
+const getTriggers = "SELECT * FROM triggers";
 
 const getCompletedTriggerEntries =
-  "SELECT trigger_id FROM trigger_entries WHERE entry_time >= NOW() - '1 day'::INTERVAL";
+  "SELECT * FROM trigger_entries WHERE entry_time >= NOW() - '1 day'::INTERVAL";
 module.exports = {
   getCompletedSymptomEntries,
   getCompletedTriggerEntries,
+  getSymptoms,
+  getTriggers,
 };

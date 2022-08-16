@@ -19,41 +19,89 @@ const queries = require("./queries");
 //   // console.log("hello");
 // };
 
-const getCompletedSymptomEntries = (request, response) => {
-  pool.query(queries.getCompletedSymptomEntries, (error, results) => {
-    if (error) throw error;
+// let getRelatedTriggerEntries = function () {
+//   return pool.query(queries.getTriggerEntries).then((results) => {
+//     return results.rows;
+//   });
+// };
 
-    // const responseSet = new Set();
-    // for (const res of results.rows) {
-    //   const id = res.symptom_id;
-    //   console.log(id);
-    //   responseSet.add(id);
-    // }
+// let getEntriesForTrigger = getRelatedTriggerEntries();
+// // // console.log(getEntriesForTrigger); // Promise { <pending> }
 
-    const output = {};
-    for (const row of results.rows) {
-      output[row.symptom_id] = "";
-    }
+// const addRelatedEntries = (symptomID, rating) => {
+//   getEntriesForTrigger.then(function (result) {
 
-    response.status(200).json(output);
+let getSymptoms = function () {
+  return pool.query(queries.getSymptoms).then((results) => {
+    return results.rows;
   });
 };
+
+let getSymptomsData = getSymptoms();
+
+const getCompletedSymptomEntries = (request, response) => {
+  getSymptomsData.then(function (symptomsResults) {
+    pool.query(queries.getCompletedSymptomEntries, (error, results) => {
+      if (error) throw error;
+      const output = {};
+      for (const row of results.rows) {
+        output[row.symptom_id] = "a";
+      }
+      for (const row of symptomsResults) {
+        const id = row.id.toString();
+        if (output[id]) {
+          output[row.id] = row.name;
+        }
+      }
+
+      response.status(200).json(output);
+    });
+  });
+};
+
+let getTriggers = function () {
+  return pool.query(queries.getTriggers).then((results) => {
+    return results.rows;
+  });
+};
+
+let getTriggersData = getTriggers();
 
 const getCompletedTriggerEntries = (request, response) => {
-  pool.query(queries.getCompletedTriggerEntries, (error, results) => {
-    if (error) throw error;
+  getTriggersData.then(function (triggersResults) {
+    pool.query(queries.getCompletedTriggerEntries, (error, results) => {
+      if (error) throw error;
+      const output = {};
+      for (const row of results.rows) {
+        output[row.trigger_id] = "a";
+      }
+      for (const row of triggersResults) {
+        const id = row.id.toString();
+        if (output[id]) {
+          output[row.id] = row.name;
+        }
+      }
 
-    const output = {};
-    for (const row of results.rows) {
-      output[row.trigger_id] = "";
-    }
-
-    response.status(200).json(output);
+      response.status(200).json(output);
+    });
   });
-
-  //   response.status(200).json(results.rows);
-  // });
 };
+
+// const getCompletedTriggerEntries = (request, response) => {
+//   pool.query(queries.getCompletedTriggerEntries, (error, results) => {
+//     if (error) throw error;
+
+//     const output = {};
+//     for (const row of results.rows) {
+//       output[row.trigger_id] = row.name;
+//     }
+
+//     response.status(200).json(output);
+//   });
+
+//   //   response.status(200).json(results.rows);
+//   // });
+// };
 
 // const getSymptomEntryById = (request, response) => {
 //   const id = parseInt(request.params.id);
