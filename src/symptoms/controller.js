@@ -2,7 +2,6 @@ const pool = require("../../db");
 const queries = require("./queries");
 // const entry_controller = require("./symptom_entry/controller");
 // const entriesForSymptom = require("./entryController");
-const entriesController = require("../entries/controller");
 const relatedEntriesController = require("../related_entries/controller");
 
 //GET

@@ -1,7 +1,5 @@
 const pool = require("../../db");
 const queries = require("./queries");
-const entriesController = require("../entries/controller");
-const entryQueries = require("../entries/queries");
 
 const relatedEntriesController = require("../related_entries/controller");
 const analysisController = require("../related_entries/analysis");
@@ -42,7 +40,7 @@ const getAllEntriesForSymptom = (request, response) => {
 };
 
 const getlastSymptomEntry = (request, response) => {
-  const id = parseInt(request.params.id);
+  // const id = parseInt(request.params.id);
   pool.query(queries.getlastSymptomEntry, (error, results) => {
     if (error) throw error;
     response.status(200).json(results.rows);
@@ -92,8 +90,6 @@ const deleteSymptomEntry = (request, response) => {
     response.status(200).send("Symptom entrydeleted successfully!");
   });
 };
-
-
 
 module.exports = {
   getSymptomEntries,

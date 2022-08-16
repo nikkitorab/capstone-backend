@@ -1,6 +1,5 @@
 const pool = require("../../db");
 const queries = require("./queries");
-const entriesController = require("../entries/controller");
 
 //GET
 
