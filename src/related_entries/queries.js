@@ -84,6 +84,9 @@ const getSignificantSymptomIDs =
 
 const getSymptomNameById = "SELECT name FROM symptoms WHERE id = $1";
 
+const getCompletedSymptomEntries =
+  "SELECT * FROM symptom_entries WHERE entry_time >= NOW() - '1 day'::INTERVAL";
+
 module.exports = {
   getRelatedEntriesSymptomID,
   addEntries,
@@ -108,6 +111,7 @@ module.exports = {
   getSignificantTriggers,
   getSignificantSymptomIDs,
   getSymptomNameById,
+  getCompletedSymptomEntries,
   // getRelatedEntriesSymptomTime,
   // deleteAllEntriesForSymptom,
   // deleteAllEntriesForTrigger,

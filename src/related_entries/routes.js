@@ -28,6 +28,10 @@ router.get("/data/sig/trigger", analysis.getSignificantTriggers);
 // make new related entry
 router.post("/", controller.postEntries);
 
+router.get("/symptom-entries/completed", controller.getCompletedSymptomEntries);
+
+// getCompletedSymptomEntries
+
 // router.get("/triggers", controller.getRelatedTriggerEntries);
 
 // addRelated

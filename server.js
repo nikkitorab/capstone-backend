@@ -12,7 +12,9 @@ const symptomEntryRoutes = require("./src/symptom_entries/routes");
 const triggerEntryRoutes = require("./src/trigger_entries/routes");
 
 const usersRoutes = require("./src/users/routes");
-const entryDataRoutes = require("./src/entries/routes");
+// const entryDataRoutes = require("./src/entries/routes");
+
+const completedRoutes = require("./src/completed/routes");
 
 const relatedEntriesRoutes = require("./src/related_entries/routes");
 
@@ -32,6 +34,8 @@ app.use("/trigger-entries", triggerEntryRoutes);
 app.use("/users", usersRoutes);
 // app.use("/entries", entryDataRoutes);
 app.use("/related-entries", relatedEntriesRoutes);
+
+app.use("/completed", completedRoutes);
 
 const port = 3000;
 app.listen(port, () => console.log(`app listening on port ${port}`));

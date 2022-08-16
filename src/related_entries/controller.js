@@ -95,6 +95,14 @@ const getRelatedEntriesSymptomID = (request, response) => {
   });
 };
 
+//getCompletedSymptomEntries
+const getCompletedSymptomEntries = (request, response) => {
+  pool.query(queries.getCompletedSymptomEntries, (error, results) => {
+    if (error) throw error;
+    response.status(200).json(results.rows);
+  });
+};
+
 //*******************************************************************************************
 // GET SIGNIFICANT SYMPTOM IDS/NAMES
 //*******************************************************************************************
@@ -247,6 +255,7 @@ module.exports = {
   getRelatedTriggerEntries,
   postEntries,
   getSignifSymptomNames,
+  getCompletedSymptomEntries,
   // getTriggerEntries,
   // getLastSymptomEntry,
 };
