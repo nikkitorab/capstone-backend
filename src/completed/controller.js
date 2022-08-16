@@ -22,15 +22,37 @@ const queries = require("./queries");
 const getCompletedSymptomEntries = (request, response) => {
   pool.query(queries.getCompletedSymptomEntries, (error, results) => {
     if (error) throw error;
-    response.status(200).json(results.rows);
+
+    // const responseSet = new Set();
+    // for (const res of results.rows) {
+    //   const id = res.symptom_id;
+    //   console.log(id);
+    //   responseSet.add(id);
+    // }
+
+    const output = {};
+    for (const row of results.rows) {
+      output[row.symptom_id] = "";
+    }
+
+    response.status(200).json(output);
   });
 };
 
 const getCompletedTriggerEntries = (request, response) => {
   pool.query(queries.getCompletedTriggerEntries, (error, results) => {
     if (error) throw error;
-    response.status(200).json(results.rows);
+
+    const output = {};
+    for (const row of results.rows) {
+      output[row.trigger_id] = "";
+    }
+
+    response.status(200).json(output);
   });
+
+  //   response.status(200).json(results.rows);
+  // });
 };
 
 // const getSymptomEntryById = (request, response) => {
